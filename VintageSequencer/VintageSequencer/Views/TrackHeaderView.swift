@@ -15,6 +15,9 @@ struct TrackHeaderView: View {
     @State private var showScalePicker = false
     @State private var showFeelPopover = false
 
+    @AppStorage("showTooltips") private var showTooltips: Bool = true
+    private func tip(_ text: String) -> String { showTooltips ? text : "" }
+
     private func directionTooltip(_ dir: PlayDirection) -> String {
         switch dir {
         case .forward:  return "Vorwärts: Step 1 → N"
@@ -24,11 +27,25 @@ struct TrackHeaderView: View {
         }
     }
 
+    private func directionSymbol(_ dir: PlayDirection) -> String {
+        switch dir {
+        case .forward:  return "play.fill"
+        case .reverse:  return "backward.end.fill"
+        case .pingPong: return "arrow.left.arrow.right"
+        case .random:   return "waveform"
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
 
-            // ── Row 1: ● Name  ·  m · s · ⎘ · × ────────────────────────
+            // ── Row 1: ● Name  ·  m · s · ⎘ ─────────────────────────────
             HStack(spacing: 4) {
+                // Spacer so content clears the traffic-light delete button
+                if onDelete != nil {
+                    Spacer().frame(width: 14)
+                }
+
                 Circle().fill(accentColor).frame(width: 6, height: 6)
 
                 TextField("Name", text: $track.name)
@@ -41,39 +58,38 @@ struct TrackHeaderView: View {
 
                 Button(track.isMuted ? "M" : "m") { track.isMuted.toggle() }
                     .buttonStyle(VintageSmallButtonStyle(isActive: track.isMuted, accent: .orange))
-                    .help(track.isMuted ? "Track stumm (klicken zum Einschalten)" : "Track stummschalten")
+                    .help(tip(track.isMuted ? "Track stumm (klicken zum Einschalten)" : "Track stummschalten"))
+
                 Button(track.isSolo ? "S" : "s") { track.isSolo.toggle() }
                     .buttonStyle(VintageSmallButtonStyle(isActive: track.isSolo,
                         accent: Color(red: 0.9, green: 0.9, blue: 0.1)))
-                    .help(track.isSolo ? "Solo aktiv (alle anderen stumm)" : "Nur diesen Track Solo spielen")
+                    .help(tip(track.isSolo ? "Solo aktiv (alle anderen stumm)" : "Nur diesen Track Solo spielen"))
+
                 if let onDuplicate {
-                    Button("⎘") { onDuplicate() }
-                        .font(.system(size: 11)).foregroundColor(VintageTheme.textSecondary)
-                        .buttonStyle(.plain).help("Duplicate track")
-                }
-                if let onDelete {
-                    Button("×") { onDelete() }
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(VintageTheme.textSecondary)
-                        .buttonStyle(.plain).help("Delete track")
+                    Button { onDuplicate() } label: {
+                        Text("⎘")
+                            .font(.system(size: 13))
+                            .foregroundColor(VintageTheme.textSecondary)
+                    }
+                    .buttonStyle(.plain)
+                    .help(tip("Track duplizieren"))
                 }
             }
 
-            // ── Row 2: Direction buttons · CH ──────────────────────────
+            // ── Row 2: Direction buttons (symbols) · CH ───────────────────
             HStack(spacing: 0) {
-                // Segmented direction bar
                 HStack(spacing: 0) {
                     ForEach(PlayDirection.allCases, id: \.self) { dir in
                         let isActive = track.direction == dir
-                        Button(dir.rawValue) { track.direction = dir }
-                            .font(.system(size: 9, weight: isActive ? .bold : .regular,
-                                          design: .monospaced))
-                            .lineLimit(1)
-                            .foregroundColor(isActive ? .black : VintageTheme.textSecondary)
-                            .padding(.horizontal, 4)
-                            .padding(.vertical, 3)
-                            .background(isActive ? accentColor : VintageTheme.stepInactive)
-                            .buttonStyle(.plain)
-                            .help(directionTooltip(dir))
+                        Button { track.direction = dir } label: {
+                            Image(systemName: directionSymbol(dir))
+                                .font(.system(size: 10, weight: isActive ? .bold : .regular))
+                                .frame(width: 28, height: 22)
+                                .foregroundColor(isActive ? .black : VintageTheme.textSecondary)
+                                .background(isActive ? accentColor : VintageTheme.stepInactive)
+                        }
+                        .buttonStyle(.plain)
+                        .help(tip(directionTooltip(dir)))
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 4))
@@ -82,7 +98,9 @@ struct TrackHeaderView: View {
 
                 Spacer()
 
-                Text("CH").font(VintageTheme.monoSmall).foregroundColor(VintageTheme.textSecondary)
+                Text("CH")
+                    .font(VintageTheme.monoSmall)
+                    .foregroundColor(VintageTheme.textSecondary)
                     .padding(.trailing, 2)
                 Picker("", selection: $track.midiChannel) {
                     ForEach(1...16, id: \.self) { ch in
@@ -95,10 +113,10 @@ struct TrackHeaderView: View {
                 .controlSize(.small)
                 .font(VintageTheme.monoSmall)
                 .frame(width: 58)
-                .help("MIDI-Kanal · 10 ◆ = GM Drums")
+                .help(tip("MIDI-Kanal · 10 ◆ = GM Drums"))
             }
 
-            // ── Row 3: FEEL · SCL  ·  RND · CLR ─────────────────────────
+            // ── Row 3: FEEL · SCL  ·  RND · CLR ──────────────────────────
             HStack(spacing: 4) {
                 let ms = Int(track.timingOffset * 1000)
                 Button {
@@ -111,6 +129,7 @@ struct TrackHeaderView: View {
                 .popover(isPresented: $showFeelPopover, arrowEdge: .bottom) {
                     FeelPopover(track: track, accentColor: accentColor)
                 }
+                .help(tip("Timing-Versatz (Feel) einstellen"))
 
                 let scaleActive = track.scaleIndex > 0
                 Button(scaleActive
@@ -122,6 +141,7 @@ struct TrackHeaderView: View {
                 .popover(isPresented: $showScalePicker, arrowEdge: .bottom) {
                     ScalePickerPopover(track: track, accentColor: accentColor)
                 }
+                .help(tip("Tonart und Modus einstellen"))
 
                 Spacer()
 
@@ -132,7 +152,8 @@ struct TrackHeaderView: View {
                     onRandomize?()
                 }
                 .buttonStyle(VintageSmallButtonStyle(isActive: false, accent: accentColor))
-                .help("Steps zufällig belegen")
+                .help(tip("Steps zufällig belegen"))
+
                 Button("CLR") {
                     let old = track.steps
                     undoManager?.registerUndo(withTarget: track) { $0.steps = old }
@@ -140,12 +161,31 @@ struct TrackHeaderView: View {
                     onClear?()
                 }
                 .buttonStyle(VintageSmallButtonStyle(isActive: false, accent: .red))
-                .help("Alle Steps dieses Tracks löschen")
+                .help(tip("Alle Steps dieses Tracks löschen"))
             }
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 8)
         .frame(maxHeight: .infinity)
+        // ── Traffic-light delete button ───────────────────────────────────
+        .overlay(alignment: .topLeading) {
+            if let onDelete {
+                Button(action: onDelete) {
+                    ZStack {
+                        Circle()
+                            .fill(Color.red)
+                        Image(systemName: "xmark")
+                            .font(.system(size: 6, weight: .bold))
+                            .foregroundColor(.white.opacity(0.85))
+                    }
+                    .frame(width: 13, height: 13)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 9)
+                .padding(.leading, 8)
+                .help(tip("Track löschen"))
+            }
+        }
     }
 }
 

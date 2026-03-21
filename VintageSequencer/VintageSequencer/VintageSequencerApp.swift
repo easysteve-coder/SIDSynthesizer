@@ -25,6 +25,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
+// AppStorage doesn't bind directly inside .commands — use a small View wrapper.
+private struct TooltipToggleItem: View {
+    @AppStorage("showTooltips") private var showTooltips: Bool = true
+    var body: some View {
+        Toggle("Tooltips anzeigen", isOn: $showTooltips)
+            .keyboardShortcut("T", modifiers: [.command, .option])
+    }
+}
+
 @main
 struct VintageSequencerApp: App {
     @StateObject private var engine = SequencerEngine()
@@ -41,6 +50,10 @@ struct VintageSequencerApp: App {
         .commands {
             // Remove "New Window" from File menu — single-window app
             CommandGroup(replacing: .newItem) {}
+
+            CommandMenu("Ansicht") {
+                TooltipToggleItem()
+            }
 
             // File menu: Open / Save Preset
             CommandGroup(replacing: .saveItem) {

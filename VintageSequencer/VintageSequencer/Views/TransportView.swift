@@ -5,6 +5,9 @@ struct TransportView: View {
     @State private var showSettings = false
     @State private var tapTimes: [Date] = []
 
+    @AppStorage("showTooltips") private var showTooltips: Bool = true
+    private func tip(_ text: String) -> String { showTooltips ? text : "" }
+
     private var bpmBinding: Binding<Double> {
         Binding(get: { engine.bpm },
                 set: { engine.bpm = $0.clamped(to: 20...300) })
@@ -71,7 +74,7 @@ struct TransportView: View {
                         )
                 }
                 .buttonStyle(.plain)
-                .help(engine.isPlaying ? "Stop (Leertaste)" : "Play (Leertaste)")
+                .help(tip(engine.isPlaying ? "Stop (Leertaste)" : "Play (Leertaste)"))
 
                 // Running LED
                 Circle()
@@ -113,7 +116,7 @@ struct TransportView: View {
             Button("TAP") { tapTempo() }
                 .buttonStyle(VintageSmallButtonStyle(isActive: false, accent: VintageTheme.amber))
                 .padding(.trailing, 10)
-                .help("Tap Tempo: 2× oder öfter klicken um BPM zu ermitteln")
+                .help(tip("Tap Tempo: 2× oder öfter klicken um BPM zu ermitteln"))
 
             sep
 
@@ -122,7 +125,7 @@ struct TransportView: View {
                      range: 0...100, size: 36,
                      accentColor: VintageTheme.amber)
                 .padding(.horizontal, 10)
-                .help("Swing: 0% = gerade, 100% = maximaler Swing (ungerade Steps werden verzögert)")
+                .help(tip("Swing: 0% = gerade, 100% = maximaler Swing (ungerade Steps werden verzögert)"))
 
             sep
 
@@ -137,9 +140,9 @@ struct TransportView: View {
                             .buttonStyle(VintagePatternButtonStyle(
                                 isActive: engine.currentPatternIndex == i,
                                 isQueued: engine.queuedPatternIndex == i))
-                            .help(engine.queuedPatternIndex == i
+                            .help(tip(engine.queuedPatternIndex == i
                                   ? "Pattern \(["A","B","C","D"][i]) — wartet auf Track-1-Ende (cyan)"
-                                  : "Pattern \(["A","B","C","D"][i]) wechseln (⌘\(i+1)) · Wechsel erfolgt am Ende von Track 1")
+                                  : "Pattern \(["A","B","C","D"][i]) wechseln (⌘\(i+1)) · Wechsel erfolgt am Ende von Track 1"))
                     }
                 }
             }
@@ -160,6 +163,9 @@ struct TransportView: View {
                                 accent: mode == .external
                                     ? Color(red: 0.2, green: 0.8, blue: 1.0)
                                     : VintageTheme.amber))
+                            .help(tip(mode == .external
+                                ? "Externer MIDI-Clock — Sequencer synchronisiert sich auf eingehenden Clock-Signal"
+                                : "Interner Clock — Sequencer läuft mit eigenem BPM-Takt"))
                     }
                 }
             }
@@ -179,6 +185,9 @@ struct TransportView: View {
                 .buttonStyle(VintageSmallButtonStyle(
                     isActive: engine.learnMode,
                     accent: Color(red: 1.0, green: 1.0, blue: 0.3)))
+                .help(tip(engine.learnMode
+                    ? "MIDI Learn aktiv — nächste eingehende Note oder CC einem Parameter zuweisen · klicken zum Deaktivieren"
+                    : "MIDI Learn — Parameter per eingehender MIDI-Nachricht belegen"))
             }
             .padding(.horizontal, 10)
 
@@ -192,12 +201,12 @@ struct TransportView: View {
                 HStack(spacing: 3) {
                     ForEach([("S", 38.0, "Klein (38 px) — mehr Steps sichtbar"),
                              ("M", 46.0, "Mittel (46 px)"),
-                             ("L", 54.0, "Groß (54 px) — einfacher zu klicken")], id: \.0) { label, val, tip in
+                             ("L", 54.0, "Groß (54 px) — einfacher zu klicken")], id: \.0) { label, val, tooltip in
                         Button(label) { engine.stepDisplaySize = val }
                             .buttonStyle(VintageSmallButtonStyle(
                                 isActive: engine.stepDisplaySize == val,
                                 accent: VintageTheme.amber))
-                            .help(tip)
+                            .help(tip(tooltip))
                     }
                 }
             }
@@ -216,6 +225,7 @@ struct TransportView: View {
             }
             .buttonStyle(.plain)
             .padding(.trailing, 12)
+            .help(tip("Einstellungen — MIDI-Ausgang, Step-Größe und weitere Optionen"))
             .sheet(isPresented: $showSettings) {
                 SettingsView()
                     .environmentObject(engine)
