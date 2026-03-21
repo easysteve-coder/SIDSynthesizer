@@ -1,0 +1,361 @@
+[
+  {
+    "name": "A",
+    "tracks": [
+      {
+        "name": "Bass 7/8",
+        "stepCount": 7,
+        "midiChannel": 1,
+        "cc1Number": 74,
+        "cc2Number": 71,
+        "cc1Label": "Cutoff",
+        "cc2Label": "Reso",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"A1000001-0000-0000-0000-000000000001","isActive":true,"note":36,"velocity":110,"gate":0.7,"probability":1.0,"ratchet":1,"cc1Value":90,"cc2Value":40},
+          {"id":"A1000001-0000-0000-0000-000000000002","isActive":true,"note":36,"velocity":80,"gate":0.4,"probability":1.0,"ratchet":1,"cc1Value":70,"cc2Value":30},
+          {"id":"A1000001-0000-0000-0000-000000000003","isActive":true,"note":43,"velocity":100,"gate":0.6,"probability":1.0,"ratchet":1,"cc1Value":85,"cc2Value":35},
+          {"id":"A1000001-0000-0000-0000-000000000004","isActive":true,"note":40,"velocity":90,"gate":0.5,"probability":1.0,"ratchet":2,"cc1Value":100,"cc2Value":50},
+          {"id":"A1000001-0000-0000-0000-000000000005","isActive":true,"note":46,"velocity":105,"gate":0.7,"probability":1.0,"ratchet":1,"cc1Value":80,"cc2Value":40},
+          {"id":"A1000001-0000-0000-0000-000000000006","isActive":false,"note":43,"velocity":75,"gate":0.3,"probability":1.0,"ratchet":1,"cc1Value":60,"cc2Value":30},
+          {"id":"A1000001-0000-0000-0000-000000000007","isActive":true,"note":48,"velocity":115,"gate":0.8,"probability":1.0,"ratchet":1,"cc1Value":110,"cc2Value":55}
+        ]
+      },
+      {
+        "name": "Lead 7/8",
+        "stepCount": 7,
+        "midiChannel": 2,
+        "cc1Number": 1,
+        "cc2Number": 11,
+        "cc1Label": "Mod",
+        "cc2Label": "Expr",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"A2000001-0000-0000-0000-000000000001","isActive":true,"note":67,"velocity":95,"gate":0.6,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":100},
+          {"id":"A2000001-0000-0000-0000-000000000002","isActive":false,"note":65,"velocity":80,"gate":0.4,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":90},
+          {"id":"A2000001-0000-0000-0000-000000000003","isActive":true,"note":64,"velocity":88,"gate":0.5,"probability":1.0,"ratchet":1,"cc1Value":72,"cc2Value":95},
+          {"id":"A2000001-0000-0000-0000-000000000004","isActive":true,"note":62,"velocity":92,"gate":0.7,"probability":0.75,"ratchet":1,"cc1Value":80,"cc2Value":100},
+          {"id":"A2000001-0000-0000-0000-000000000005","isActive":true,"note":60,"velocity":100,"gate":0.8,"probability":1.0,"ratchet":1,"cc1Value":90,"cc2Value":110},
+          {"id":"A2000001-0000-0000-0000-000000000006","isActive":true,"note":62,"velocity":85,"gate":0.4,"probability":1.0,"ratchet":2,"cc1Value":70,"cc2Value":90},
+          {"id":"A2000001-0000-0000-0000-000000000007","isActive":true,"note":64,"velocity":98,"gate":0.6,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":100}
+        ]
+      },
+      {
+        "name": "Pad 14",
+        "stepCount": 14,
+        "midiChannel": 3,
+        "cc1Number": 74,
+        "cc2Number": 1,
+        "cc1Label": "Cutoff",
+        "cc2Label": "Mod",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"A3000001-0000-0000-0000-000000000001","isActive":true,"note":48,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":60,"cc2Value":20},
+          {"id":"A3000001-0000-0000-0000-000000000002","isActive":false,"note":48,"velocity":60,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":62,"cc2Value":20},
+          {"id":"A3000001-0000-0000-0000-000000000003","isActive":false,"note":48,"velocity":60,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":22},
+          {"id":"A3000001-0000-0000-0000-000000000004","isActive":false,"note":52,"velocity":65,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":66,"cc2Value":22},
+          {"id":"A3000001-0000-0000-0000-000000000005","isActive":false,"note":52,"velocity":65,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":68,"cc2Value":24},
+          {"id":"A3000001-0000-0000-0000-000000000006","isActive":false,"note":52,"velocity":65,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":70,"cc2Value":24},
+          {"id":"A3000001-0000-0000-0000-000000000007","isActive":false,"note":55,"velocity":68,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":72,"cc2Value":26},
+          {"id":"A3000001-0000-0000-0000-000000000008","isActive":true,"note":55,"velocity":72,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":74,"cc2Value":28},
+          {"id":"A3000001-0000-0000-0000-000000000009","isActive":false,"note":55,"velocity":68,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":76,"cc2Value":30},
+          {"id":"A3000001-0000-0000-0000-00000000000A","isActive":false,"note":59,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":78,"cc2Value":30},
+          {"id":"A3000001-0000-0000-0000-00000000000B","isActive":false,"note":59,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":80,"cc2Value":32},
+          {"id":"A3000001-0000-0000-0000-00000000000C","isActive":false,"note":59,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":82,"cc2Value":32},
+          {"id":"A3000001-0000-0000-0000-00000000000D","isActive":false,"note":60,"velocity":72,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":84,"cc2Value":34},
+          {"id":"A3000001-0000-0000-0000-00000000000E","isActive":false,"note":60,"velocity":72,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":86,"cc2Value":36}
+        ]
+      },
+      {
+        "name": "Perc 7",
+        "stepCount": 7,
+        "midiChannel": 10,
+        "cc1Number": 74,
+        "cc2Number": 71,
+        "cc1Label": "Decay",
+        "cc2Label": "Tone",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"A4000001-0000-0000-0000-000000000001","isActive":true,"note":36,"velocity":120,"gate":0.3,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":80},
+          {"id":"A4000001-0000-0000-0000-000000000002","isActive":false,"note":38,"velocity":85,"gate":0.2,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"A4000001-0000-0000-0000-000000000003","isActive":true,"note":42,"velocity":90,"gate":0.2,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"A4000001-0000-0000-0000-000000000004","isActive":true,"note":38,"velocity":95,"gate":0.25,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":70},
+          {"id":"A4000001-0000-0000-0000-000000000005","isActive":false,"note":42,"velocity":80,"gate":0.2,"probability":0.75,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"A4000001-0000-0000-0000-000000000006","isActive":true,"note":36,"velocity":110,"gate":0.3,"probability":1.0,"ratchet":2,"cc1Value":64,"cc2Value":75},
+          {"id":"A4000001-0000-0000-0000-000000000007","isActive":true,"note":42,"velocity":88,"gate":0.2,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64}
+        ]
+      }
+    ]
+  },
+  {
+    "name": "B",
+    "tracks": [
+      {
+        "name": "Bass REV",
+        "stepCount": 7,
+        "midiChannel": 1,
+        "cc1Number": 74,
+        "cc2Number": 71,
+        "cc1Label": "Cutoff",
+        "cc2Label": "Reso",
+        "direction": "REV",
+        "isMuted": false,
+        "steps": [
+          {"id":"B1000001-0000-0000-0000-000000000001","isActive":true,"note":48,"velocity":115,"gate":0.8,"probability":1.0,"ratchet":1,"cc1Value":110,"cc2Value":55},
+          {"id":"B1000001-0000-0000-0000-000000000002","isActive":false,"note":43,"velocity":75,"gate":0.3,"probability":1.0,"ratchet":1,"cc1Value":60,"cc2Value":30},
+          {"id":"B1000001-0000-0000-0000-000000000003","isActive":true,"note":46,"velocity":105,"gate":0.7,"probability":1.0,"ratchet":1,"cc1Value":80,"cc2Value":40},
+          {"id":"B1000001-0000-0000-0000-000000000004","isActive":true,"note":40,"velocity":90,"gate":0.5,"probability":1.0,"ratchet":2,"cc1Value":100,"cc2Value":50},
+          {"id":"B1000001-0000-0000-0000-000000000005","isActive":true,"note":43,"velocity":100,"gate":0.6,"probability":1.0,"ratchet":1,"cc1Value":85,"cc2Value":35},
+          {"id":"B1000001-0000-0000-0000-000000000006","isActive":true,"note":36,"velocity":80,"gate":0.4,"probability":1.0,"ratchet":1,"cc1Value":70,"cc2Value":30},
+          {"id":"B1000001-0000-0000-0000-000000000007","isActive":true,"note":36,"velocity":110,"gate":0.7,"probability":1.0,"ratchet":1,"cc1Value":90,"cc2Value":40}
+        ]
+      },
+      {
+        "name": "Lead P-P",
+        "stepCount": 7,
+        "midiChannel": 2,
+        "cc1Number": 1,
+        "cc2Number": 11,
+        "cc1Label": "Mod",
+        "cc2Label": "Expr",
+        "direction": "P-P",
+        "isMuted": false,
+        "steps": [
+          {"id":"B2000001-0000-0000-0000-000000000001","isActive":true,"note":60,"velocity":100,"gate":0.8,"probability":1.0,"ratchet":1,"cc1Value":90,"cc2Value":110},
+          {"id":"B2000001-0000-0000-0000-000000000002","isActive":true,"note":62,"velocity":85,"gate":0.4,"probability":1.0,"ratchet":2,"cc1Value":70,"cc2Value":90},
+          {"id":"B2000001-0000-0000-0000-000000000003","isActive":true,"note":64,"velocity":88,"gate":0.5,"probability":1.0,"ratchet":1,"cc1Value":72,"cc2Value":95},
+          {"id":"B2000001-0000-0000-0000-000000000004","isActive":true,"note":65,"velocity":92,"gate":0.6,"probability":0.75,"ratchet":1,"cc1Value":80,"cc2Value":100},
+          {"id":"B2000001-0000-0000-0000-000000000005","isActive":true,"note":67,"velocity":95,"gate":0.6,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":100},
+          {"id":"B2000001-0000-0000-0000-000000000006","isActive":false,"note":65,"velocity":80,"gate":0.4,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":90},
+          {"id":"B2000001-0000-0000-0000-000000000007","isActive":true,"note":69,"velocity":98,"gate":0.7,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":100}
+        ]
+      },
+      {
+        "name": "Pad 14",
+        "stepCount": 14,
+        "midiChannel": 3,
+        "cc1Number": 74,
+        "cc2Number": 1,
+        "cc1Label": "Cutoff",
+        "cc2Label": "Mod",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"B3000001-0000-0000-0000-000000000001","isActive":true,"note":52,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":60,"cc2Value":20},
+          {"id":"B3000001-0000-0000-0000-000000000002","isActive":false,"note":52,"velocity":60,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":65,"cc2Value":22},
+          {"id":"B3000001-0000-0000-0000-000000000003","isActive":false,"note":52,"velocity":60,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":70,"cc2Value":24},
+          {"id":"B3000001-0000-0000-0000-000000000004","isActive":false,"note":55,"velocity":65,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":75,"cc2Value":26},
+          {"id":"B3000001-0000-0000-0000-000000000005","isActive":false,"note":55,"velocity":65,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":80,"cc2Value":28},
+          {"id":"B3000001-0000-0000-0000-000000000006","isActive":false,"note":55,"velocity":65,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":85,"cc2Value":30},
+          {"id":"B3000001-0000-0000-0000-000000000007","isActive":false,"note":59,"velocity":68,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":88,"cc2Value":32},
+          {"id":"B3000001-0000-0000-0000-000000000008","isActive":true,"note":60,"velocity":72,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":90,"cc2Value":35},
+          {"id":"B3000001-0000-0000-0000-000000000009","isActive":false,"note":60,"velocity":68,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":88,"cc2Value":32},
+          {"id":"B3000001-0000-0000-0000-00000000000A","isActive":false,"note":59,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":85,"cc2Value":30},
+          {"id":"B3000001-0000-0000-0000-00000000000B","isActive":false,"note":59,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":80,"cc2Value":28},
+          {"id":"B3000001-0000-0000-0000-00000000000C","isActive":false,"note":55,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":75,"cc2Value":26},
+          {"id":"B3000001-0000-0000-0000-00000000000D","isActive":false,"note":55,"velocity":72,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":70,"cc2Value":24},
+          {"id":"B3000001-0000-0000-0000-00000000000E","isActive":false,"note":52,"velocity":72,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":65,"cc2Value":22}
+        ]
+      },
+      {
+        "name": "Perc RND",
+        "stepCount": 7,
+        "midiChannel": 10,
+        "cc1Number": 74,
+        "cc2Number": 71,
+        "cc1Label": "Decay",
+        "cc2Label": "Tone",
+        "direction": "RND",
+        "isMuted": false,
+        "steps": [
+          {"id":"B4000001-0000-0000-0000-000000000001","isActive":true,"note":36,"velocity":120,"gate":0.3,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":80},
+          {"id":"B4000001-0000-0000-0000-000000000002","isActive":true,"note":38,"velocity":85,"gate":0.2,"probability":0.75,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"B4000001-0000-0000-0000-000000000003","isActive":true,"note":42,"velocity":90,"gate":0.2,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"B4000001-0000-0000-0000-000000000004","isActive":true,"note":46,"velocity":95,"gate":0.25,"probability":0.5,"ratchet":1,"cc1Value":64,"cc2Value":70},
+          {"id":"B4000001-0000-0000-0000-000000000005","isActive":true,"note":42,"velocity":80,"gate":0.2,"probability":0.75,"ratchet":2,"cc1Value":64,"cc2Value":64},
+          {"id":"B4000001-0000-0000-0000-000000000006","isActive":true,"note":36,"velocity":110,"gate":0.3,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":75},
+          {"id":"B4000001-0000-0000-0000-000000000007","isActive":true,"note":49,"velocity":88,"gate":0.2,"probability":0.5,"ratchet":1,"cc1Value":64,"cc2Value":64}
+        ]
+      }
+    ]
+  },
+  {
+    "name": "C",
+    "tracks": [
+      {
+        "name": "Bass 5",
+        "stepCount": 5,
+        "midiChannel": 1,
+        "cc1Number": 74,
+        "cc2Number": 71,
+        "cc1Label": "Cutoff",
+        "cc2Label": "Reso",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"C1000001-0000-0000-0000-000000000001","isActive":true,"note":36,"velocity":115,"gate":0.8,"probability":1.0,"ratchet":1,"cc1Value":95,"cc2Value":45},
+          {"id":"C1000001-0000-0000-0000-000000000002","isActive":true,"note":43,"velocity":90,"gate":0.5,"probability":1.0,"ratchet":1,"cc1Value":80,"cc2Value":35},
+          {"id":"C1000001-0000-0000-0000-000000000003","isActive":false,"note":36,"velocity":80,"gate":0.3,"probability":1.0,"ratchet":1,"cc1Value":70,"cc2Value":30},
+          {"id":"C1000001-0000-0000-0000-000000000004","isActive":true,"note":46,"velocity":100,"gate":0.7,"probability":1.0,"ratchet":2,"cc1Value":105,"cc2Value":50},
+          {"id":"C1000001-0000-0000-0000-000000000005","isActive":true,"note":48,"velocity":110,"gate":0.6,"probability":1.0,"ratchet":1,"cc1Value":100,"cc2Value":50}
+        ]
+      },
+      {
+        "name": "Lead 5",
+        "stepCount": 5,
+        "midiChannel": 2,
+        "cc1Number": 1,
+        "cc2Number": 11,
+        "cc1Label": "Mod",
+        "cc2Label": "Expr",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"C2000001-0000-0000-0000-000000000001","isActive":true,"note":72,"velocity":95,"gate":0.7,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":100},
+          {"id":"C2000001-0000-0000-0000-000000000002","isActive":true,"note":69,"velocity":88,"gate":0.5,"probability":1.0,"ratchet":1,"cc1Value":70,"cc2Value":95},
+          {"id":"C2000001-0000-0000-0000-000000000003","isActive":true,"note":67,"velocity":80,"gate":0.4,"probability":0.75,"ratchet":1,"cc1Value":76,"cc2Value":90},
+          {"id":"C2000001-0000-0000-0000-000000000004","isActive":false,"note":65,"velocity":85,"gate":0.6,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":95},
+          {"id":"C2000001-0000-0000-0000-000000000005","isActive":true,"note":64,"velocity":100,"gate":0.8,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":110}
+        ]
+      },
+      {
+        "name": "Pad 10",
+        "stepCount": 10,
+        "midiChannel": 3,
+        "cc1Number": 74,
+        "cc2Number": 1,
+        "cc1Label": "Cutoff",
+        "cc2Label": "Mod",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"C3000001-0000-0000-0000-000000000001","isActive":true,"note":48,"velocity":65,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":55,"cc2Value":15},
+          {"id":"C3000001-0000-0000-0000-000000000002","isActive":false,"note":48,"velocity":60,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":60,"cc2Value":18},
+          {"id":"C3000001-0000-0000-0000-000000000003","isActive":false,"note":52,"velocity":62,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":65,"cc2Value":20},
+          {"id":"C3000001-0000-0000-0000-000000000004","isActive":false,"note":52,"velocity":62,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":70,"cc2Value":22},
+          {"id":"C3000001-0000-0000-0000-000000000005","isActive":false,"note":55,"velocity":65,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":75,"cc2Value":25},
+          {"id":"C3000001-0000-0000-0000-000000000006","isActive":true,"note":55,"velocity":68,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":80,"cc2Value":28},
+          {"id":"C3000001-0000-0000-0000-000000000007","isActive":false,"note":59,"velocity":68,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":82,"cc2Value":30},
+          {"id":"C3000001-0000-0000-0000-000000000008","isActive":false,"note":59,"velocity":68,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":84,"cc2Value":30},
+          {"id":"C3000001-0000-0000-0000-000000000009","isActive":false,"note":60,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":86,"cc2Value":32},
+          {"id":"C3000001-0000-0000-0000-00000000000A","isActive":false,"note":60,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":88,"cc2Value":34}
+        ]
+      },
+      {
+        "name": "Muted",
+        "stepCount": 5,
+        "midiChannel": 10,
+        "cc1Number": 74,
+        "cc2Number": 71,
+        "cc1Label": "Decay",
+        "cc2Label": "Tone",
+        "direction": "FWD",
+        "isMuted": true,
+        "steps": [
+          {"id":"C4000001-0000-0000-0000-000000000001","isActive":false,"note":36,"velocity":100,"gate":0.3,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"C4000001-0000-0000-0000-000000000002","isActive":false,"note":38,"velocity":85,"gate":0.2,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"C4000001-0000-0000-0000-000000000003","isActive":false,"note":42,"velocity":90,"gate":0.2,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"C4000001-0000-0000-0000-000000000004","isActive":false,"note":38,"velocity":95,"gate":0.25,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"C4000001-0000-0000-0000-000000000005","isActive":false,"note":42,"velocity":80,"gate":0.2,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64}
+        ]
+      }
+    ]
+  },
+  {
+    "name": "D",
+    "tracks": [
+      {
+        "name": "Bass 9",
+        "stepCount": 9,
+        "midiChannel": 1,
+        "cc1Number": 74,
+        "cc2Number": 71,
+        "cc1Label": "Cutoff",
+        "cc2Label": "Reso",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"D1000001-0000-0000-0000-000000000001","isActive":true,"note":36,"velocity":115,"gate":0.7,"probability":1.0,"ratchet":1,"cc1Value":90,"cc2Value":40},
+          {"id":"D1000001-0000-0000-0000-000000000002","isActive":false,"note":36,"velocity":80,"gate":0.4,"probability":1.0,"ratchet":1,"cc1Value":75,"cc2Value":32},
+          {"id":"D1000001-0000-0000-0000-000000000003","isActive":true,"note":43,"velocity":100,"gate":0.6,"probability":1.0,"ratchet":1,"cc1Value":85,"cc2Value":38},
+          {"id":"D1000001-0000-0000-0000-000000000004","isActive":false,"note":43,"velocity":80,"gate":0.4,"probability":1.0,"ratchet":1,"cc1Value":78,"cc2Value":34},
+          {"id":"D1000001-0000-0000-0000-000000000005","isActive":true,"note":46,"velocity":105,"gate":0.7,"probability":1.0,"ratchet":2,"cc1Value":100,"cc2Value":48},
+          {"id":"D1000001-0000-0000-0000-000000000006","isActive":false,"note":46,"velocity":75,"gate":0.3,"probability":1.0,"ratchet":1,"cc1Value":72,"cc2Value":30},
+          {"id":"D1000001-0000-0000-0000-000000000007","isActive":true,"note":48,"velocity":110,"gate":0.8,"probability":1.0,"ratchet":1,"cc1Value":108,"cc2Value":52},
+          {"id":"D1000001-0000-0000-0000-000000000008","isActive":true,"note":43,"velocity":95,"gate":0.5,"probability":0.75,"ratchet":1,"cc1Value":88,"cc2Value":42},
+          {"id":"D1000001-0000-0000-0000-000000000009","isActive":true,"note":36,"velocity":120,"gate":0.9,"probability":1.0,"ratchet":4,"cc1Value":120,"cc2Value":60}
+        ]
+      },
+      {
+        "name": "Lead 9",
+        "stepCount": 9,
+        "midiChannel": 2,
+        "cc1Number": 1,
+        "cc2Number": 11,
+        "cc1Label": "Mod",
+        "cc2Label": "Expr",
+        "direction": "P-P",
+        "isMuted": false,
+        "steps": [
+          {"id":"D2000001-0000-0000-0000-000000000001","isActive":true,"note":60,"velocity":100,"gate":0.7,"probability":1.0,"ratchet":1,"cc1Value":80,"cc2Value":100},
+          {"id":"D2000001-0000-0000-0000-000000000002","isActive":true,"note":64,"velocity":88,"gate":0.5,"probability":1.0,"ratchet":1,"cc1Value":85,"cc2Value":100},
+          {"id":"D2000001-0000-0000-0000-000000000003","isActive":true,"note":67,"velocity":92,"gate":0.6,"probability":1.0,"ratchet":1,"cc1Value":90,"cc2Value":105},
+          {"id":"D2000001-0000-0000-0000-000000000004","isActive":false,"note":69,"velocity":85,"gate":0.4,"probability":0.75,"ratchet":1,"cc1Value":88,"cc2Value":100},
+          {"id":"D2000001-0000-0000-0000-000000000005","isActive":true,"note":71,"velocity":95,"gate":0.6,"probability":1.0,"ratchet":1,"cc1Value":92,"cc2Value":108},
+          {"id":"D2000001-0000-0000-0000-000000000006","isActive":true,"note":72,"velocity":100,"gate":0.8,"probability":1.0,"ratchet":1,"cc1Value":96,"cc2Value":112},
+          {"id":"D2000001-0000-0000-0000-000000000007","isActive":false,"note":71,"velocity":90,"gate":0.5,"probability":0.75,"ratchet":1,"cc1Value":90,"cc2Value":105},
+          {"id":"D2000001-0000-0000-0000-000000000008","isActive":true,"note":69,"velocity":88,"gate":0.6,"probability":1.0,"ratchet":2,"cc1Value":86,"cc2Value":102},
+          {"id":"D2000001-0000-0000-0000-000000000009","isActive":true,"note":67,"velocity":95,"gate":0.7,"probability":1.0,"ratchet":1,"cc1Value":82,"cc2Value":100}
+        ]
+      },
+      {
+        "name": "Pad 9",
+        "stepCount": 9,
+        "midiChannel": 3,
+        "cc1Number": 74,
+        "cc2Number": 1,
+        "cc1Label": "Cutoff",
+        "cc2Label": "Mod",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"D3000001-0000-0000-0000-000000000001","isActive":true,"note":48,"velocity":68,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":55,"cc2Value":15},
+          {"id":"D3000001-0000-0000-0000-000000000002","isActive":false,"note":48,"velocity":60,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":62,"cc2Value":18},
+          {"id":"D3000001-0000-0000-0000-000000000003","isActive":false,"note":52,"velocity":62,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":70,"cc2Value":22},
+          {"id":"D3000001-0000-0000-0000-000000000004","isActive":false,"note":55,"velocity":65,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":78,"cc2Value":26},
+          {"id":"D3000001-0000-0000-0000-000000000005","isActive":false,"note":59,"velocity":65,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":84,"cc2Value":30},
+          {"id":"D3000001-0000-0000-0000-000000000006","isActive":true,"note":60,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":90,"cc2Value":34},
+          {"id":"D3000001-0000-0000-0000-000000000007","isActive":false,"note":64,"velocity":70,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":94,"cc2Value":36},
+          {"id":"D3000001-0000-0000-0000-000000000008","isActive":false,"note":64,"velocity":68,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":90,"cc2Value":34},
+          {"id":"D3000001-0000-0000-0000-000000000009","isActive":false,"note":60,"velocity":68,"gate":0.9,"probability":1.0,"ratchet":1,"cc1Value":84,"cc2Value":30}
+        ]
+      },
+      {
+        "name": "Perc 9",
+        "stepCount": 9,
+        "midiChannel": 10,
+        "cc1Number": 74,
+        "cc2Number": 71,
+        "cc1Label": "Decay",
+        "cc2Label": "Tone",
+        "direction": "FWD",
+        "isMuted": false,
+        "steps": [
+          {"id":"D4000001-0000-0000-0000-000000000001","isActive":true,"note":36,"velocity":120,"gate":0.3,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":80},
+          {"id":"D4000001-0000-0000-0000-000000000002","isActive":false,"note":38,"velocity":85,"gate":0.2,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"D4000001-0000-0000-0000-000000000003","isActive":true,"note":42,"velocity":90,"gate":0.2,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"D4000001-0000-0000-0000-000000000004","isActive":true,"note":38,"velocity":100,"gate":0.25,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":70},
+          {"id":"D4000001-0000-0000-0000-000000000005","isActive":false,"note":42,"velocity":80,"gate":0.2,"probability":0.75,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"D4000001-0000-0000-0000-000000000006","isActive":true,"note":36,"velocity":110,"gate":0.3,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":75},
+          {"id":"D4000001-0000-0000-0000-000000000007","isActive":false,"note":42,"velocity":88,"gate":0.2,"probability":0.5,"ratchet":1,"cc1Value":64,"cc2Value":64},
+          {"id":"D4000001-0000-0000-0000-000000000008","isActive":true,"note":36,"velocity":115,"gate":0.4,"probability":1.0,"ratchet":2,"cc1Value":64,"cc2Value":78},
+          {"id":"D4000001-0000-0000-0000-000000000009","isActive":true,"note":42,"velocity":95,"gate":0.2,"probability":1.0,"ratchet":1,"cc1Value":64,"cc2Value":64}
+        ]
+      }
+    ]
+  }
+]
