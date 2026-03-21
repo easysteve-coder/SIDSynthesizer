@@ -39,7 +39,12 @@ final class Track: ObservableObject, Identifiable {
     let id = UUID()
 
     @Published var name:        String        = "Track"
-    @Published var stepCount:   Int           = 16
+    @Published var stepCount:   Int           = 16 {
+        didSet {
+            // Grow steps array if stepCount exceeds current capacity
+            while steps.count < stepCount { steps.append(Step()) }
+        }
+    }
     @Published var steps:       [Step]
     @Published var midiChannel: Int           = 1
     @Published var cc1Number:   Int           = 74
@@ -55,9 +60,11 @@ final class Track: ObservableObject, Identifiable {
     @Published var scaleRoot:     Int           = 0    // 0=C … 11=B
     @Published var scaleIndex:    Int           = 0    // 0=Chromatic (off)
 
-    /// Streckt alle Steps auf die Gesamtdauer von N globalen 16tel-Noten.
-    /// nil = natürlich (= stepCount 16tel). Z.B. 8 bei 7 Steps → 7:8 Polyrhythmus.
-    @Published var cycleLengthSteps: Int? = nil
+    /// Step length as a ratio of a 16th note: stepLengthNumerator / stepLengthDenominator.
+    /// 1/1 = normal 16th. 3/2 = dotted 16th (slower). 2/3 = triplet 16th (faster).
+    /// Fully independent of stepCount.
+    @Published var stepLengthNumerator:   Int = 1
+    @Published var stepLengthDenominator: Int = 1
 
     // Audio-thread state — never accessed directly from UI
     var currentStep:       Int    = 0
@@ -67,9 +74,9 @@ final class Track: ObservableObject, Identifiable {
     var pulseAccumulator:  Double = 0
 
     /// Wie viele MIDI-Pulse (24 PPQ) dauert ein Step dieses Tracks.
-    /// 6 = normaler 16tel-Step; 8.571 = 7 Steps gestreckt auf 8-Step-Dauer.
+    /// 6 = normaler 16tel-Step. pulsesPerStep = 6 × numerator / denominator.
     var pulsesPerStep: Double {
-        Double((cycleLengthSteps ?? stepCount) * 6) / Double(stepCount)
+        6.0 * Double(stepLengthNumerator) / Double(stepLengthDenominator)
     }
 
     // Display state — only written via DispatchQueue.main
@@ -79,7 +86,7 @@ final class Track: ObservableObject, Identifiable {
         self.name        = name
         self.stepCount   = stepCount
         self.midiChannel = midiChannel
-        self.steps       = (0..<32).map { _ in Step() }
+        self.steps       = (0..<64).map { _ in Step() }
     }
 
     /// Called from the audio thread. Returns the next step index.
@@ -143,25 +150,27 @@ extension Track: Codable {
         case name, stepCount, steps, midiChannel
         case cc1Number, cc2Number, cc1Label, cc2Label
         case direction, isMuted, timingOffset, scaleRoot, scaleIndex
-        case cycleLengthSteps
+        case stepLengthNumerator, stepLengthDenominator
+        case cycleLengthSteps   // legacy — migration only
     }
 
     func encode(to encoder: Encoder) throws {
         var c = encoder.container(keyedBy: CodingKeys.self)
-        try c.encode(name,                          forKey: .name)
-        try c.encode(stepCount,                     forKey: .stepCount)
+        try c.encode(name,                           forKey: .name)
+        try c.encode(stepCount,                      forKey: .stepCount)
         try c.encode(Array(steps.prefix(stepCount)), forKey: .steps)
-        try c.encode(midiChannel,                   forKey: .midiChannel)
-        try c.encode(cc1Number,                     forKey: .cc1Number)
-        try c.encode(cc2Number,                     forKey: .cc2Number)
-        try c.encode(cc1Label,                      forKey: .cc1Label)
-        try c.encode(cc2Label,                      forKey: .cc2Label)
-        try c.encode(direction,                     forKey: .direction)
-        try c.encode(isMuted,                       forKey: .isMuted)
-        try c.encode(timingOffset,                  forKey: .timingOffset)
-        try c.encode(scaleRoot,                     forKey: .scaleRoot)
-        try c.encode(scaleIndex,                    forKey: .scaleIndex)
-        try c.encodeIfPresent(cycleLengthSteps,     forKey: .cycleLengthSteps)
+        try c.encode(midiChannel,                    forKey: .midiChannel)
+        try c.encode(cc1Number,                      forKey: .cc1Number)
+        try c.encode(cc2Number,                      forKey: .cc2Number)
+        try c.encode(cc1Label,                       forKey: .cc1Label)
+        try c.encode(cc2Label,                       forKey: .cc2Label)
+        try c.encode(direction,                      forKey: .direction)
+        try c.encode(isMuted,                        forKey: .isMuted)
+        try c.encode(timingOffset,                   forKey: .timingOffset)
+        try c.encode(scaleRoot,                      forKey: .scaleRoot)
+        try c.encode(scaleIndex,                     forKey: .scaleIndex)
+        try c.encode(stepLengthNumerator,            forKey: .stepLengthNumerator)
+        try c.encode(stepLengthDenominator,          forKey: .stepLengthDenominator)
     }
 
     convenience init(from decoder: Decoder) throws {
@@ -171,7 +180,7 @@ extension Track: Codable {
         let channel   = try c.decode(Int.self,           forKey: .midiChannel)
         self.init(name: name, stepCount: stepCount, midiChannel: channel)
         var decoded   = try c.decode([Step].self,        forKey: .steps)
-        while decoded.count < 32 { decoded.append(Step()) }
+        while decoded.count < 64 { decoded.append(Step()) }
         self.steps     = decoded
         self.cc1Number = try c.decode(Int.self,          forKey: .cc1Number)
         self.cc2Number = try c.decode(Int.self,          forKey: .cc2Number)
@@ -180,8 +189,22 @@ extension Track: Codable {
         self.direction    = try c.decode(PlayDirection.self, forKey: .direction)
         self.isMuted      = try c.decode(Bool.self,         forKey: .isMuted)
         self.timingOffset = (try? c.decode(Double.self, forKey: .timingOffset)) ?? 0.0
-        self.scaleRoot         = (try? c.decode(Int.self, forKey: .scaleRoot))         ?? 0
-        self.scaleIndex        = (try? c.decode(Int.self, forKey: .scaleIndex))        ?? 0
-        self.cycleLengthSteps  =  try? c.decode(Int.self, forKey: .cycleLengthSteps)
+        self.scaleRoot    = (try? c.decode(Int.self, forKey: .scaleRoot))    ?? 0
+        self.scaleIndex   = (try? c.decode(Int.self, forKey: .scaleIndex))   ?? 0
+
+        // New model — fall back to legacy cycleLengthSteps migration
+        if let num = try? c.decode(Int.self, forKey: .stepLengthNumerator),
+           let den = try? c.decode(Int.self, forKey: .stepLengthDenominator) {
+            self.stepLengthNumerator   = max(1, num)
+            self.stepLengthDenominator = max(1, den)
+        } else if let legacy = try? c.decode(Int.self, forKey: .cycleLengthSteps),
+                  stepCount > 0 {
+            // Convert old cycleLengthSteps → ratio: cycle/stepCount, reduced
+            func gcd(_ a: Int, _ b: Int) -> Int { b == 0 ? a : gcd(b, a % b) }
+            let d = gcd(legacy, stepCount)
+            self.stepLengthNumerator   = legacy / d
+            self.stepLengthDenominator = stepCount / d
+        }
+        // else: defaults (1/1) set by init
     }
 }

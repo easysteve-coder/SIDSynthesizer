@@ -55,6 +55,12 @@ struct MainView: View {
                 }
                 .padding(12)
             }
+            // Grid as overlay: covers full viewport, draws over panels
+            // Canvas has transparent bg — only lines are visible
+            .overlay(alignment: .topLeading) {
+                BPMGridView()
+                    .padding(.top, 12)  // flush with first track row
+            }
             .background(VintageTheme.background)
 
             // ── Status bar ───────────────────────────────────────────────
