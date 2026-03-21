@@ -20,3 +20,5 @@ build/
 # Swift Package Manager
 .build/
 .swiftpm/
+VintageSequencer/VintageSequencer.xcodeproj/xcuserdata/
+VintageSequencer/VintageSequencer.xcodeproj/project.xcworkspace/xcuserdata/
