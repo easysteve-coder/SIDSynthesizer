@@ -218,10 +218,18 @@ Nach Rubber-Band- oder Shift-Auswahl erscheint eine blaue Toolbar über der Lane
 |--------|----------|
 | **N STEPS** | Anzahl markierter Steps |
 | **EDIT** | Alle markierten Steps gemeinsam bearbeiten (Note, Gate, Prob, Vel, Ratchet) |
+| **TRNS** | Bulk-Transpose: alle markierten Steps um ±24 Halbtöne transponieren |
 | **COPY** | Steps in die Zwischenablage (⌘C) |
 | **PASTE** | Zwischenablage ab erstem markierten Step einfügen (⌘V) |
 | **CLR** | Markierte Steps deaktivieren |
 | **✕** | Auswahl aufheben |
+
+**TRNS-Knob (Bulk-Transpose):**
+- Beim Öffnen werden die aktuellen Noten aller markierten Steps als Snapshot gespeichert
+- Der Regler arbeitet immer **relativ zum Snapshot** — kein Kumulations-Problem beim Hin- und Herdrehen
+- Anzeige: **+5 st** / **−3 st** (Halbtöne)
+- **RESET**: setzt alle Steps auf ihre Ausgangsnoten zurück
+- MIDI-Grenzen 0–127 werden automatisch eingehalten
 
 ### CC-Rows — Automation
 
@@ -346,6 +354,12 @@ Ein Preset enthält: BPM, Swing, alle 4 Patterns mit allen Tracks, Steps, CC-Wer
 ### Laden
 - **⌘O**: Preset öffnen
 - Bei ungespeicherten Änderungen erscheint ein Warndialog mit Option zum Abbrechen
+
+### Zuletzt geöffnete Dateien (Open Recent)
+- **File → Open Recent**: Untermenü mit den zuletzt geöffneten Presets (max. 10, neueste oben)
+- Dateinamen werden ohne `.json`-Endung angezeigt
+- **Liste leeren**: entfernt alle Einträge aus der Liste
+- Gelöschte oder verschobene Dateien werden beim Start automatisch herausgefiltert
 
 ### Namensanzeige
 - Unterhalb des Logos: aktueller Dateiname

@@ -569,6 +569,7 @@ Zentrale Lokalisierungsdatei. Enthält alle ~80 UI-Strings als statische Propert
 
 | Version | Änderungen |
 |---------|-----------|
+| 1.0.2 | Recent Files (UserDefaults, max. 10, Auto-Filter gelöschter Dateien); Bulk-Transpose TRNS-Knob (±24 Halbtöne, Snapshot-relativ, RESET, MIDI-Clamp 0–127) |
 | 1.0.1 | Bugfixes: Absturz bei Rechtsklick + Edit (Thread-Safety); MIDI-Feedback-Loop (eigener Port ausgeblendet); Gate-Untergrenze für Akkorde (min. 1/32); Undo für Track-Operationen (Add/Delete/Insert/Duplicate); Undo für Step-Drag |
 | 1.0 | Undo-Stack vollständig (Ratio-Drag, Step-Count-Drag, Track-Name); GateKnobView (12 Rasterpunkte); Lokalisierung EN/DE (Str.swift, ⌘⌥L); Akkord-Eingabe via Klaviatur + Analyse; TransportView Font-/Color-Fixes |
 | 0.9 | Ratio-Modell (stepLengthNumerator/Denominator), globales BPM-Raster, File-Split, StretchHandle-Redesign, Tooltip-System, Rechtsklick-Kontextmenü, Direction-Symbole, globaler TextField-Fokus-Monitor, CC-Row-Scroll-Sync |
