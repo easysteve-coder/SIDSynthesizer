@@ -169,38 +169,33 @@ Jeder Kreis / jedes Rechteck = ein Step.
 - **Velocity**: 0–127 (Anschlagstärke). 0 = kein Ton, 127 = maximum
 
 #### Chord — Akkord
-Zusätzliche Noten die gleichzeitig mit der Grundnote gespielt werden:
+Akkorde werden über eine **Klaviatur im Step-Detail-Fenster** eingegeben — die Töne werden direkt angeklickt, nicht aus einer Liste gewählt.
 
-| Typ | Intervalle | Klang |
-|-----|-----------|-------|
-| None | — | nur Grundton |
-| Major | +4, +7 | Dur-Dreiklang |
-| Minor | +3, +7 | Moll-Dreiklang |
-| Dom7 | +4, +7, +10 | Dominantseptakkord |
-| Maj7 | +4, +7, +11 | Großer Septakkord |
-| Min7 | +3, +7, +10 | Kleiner Septakkord |
-| Dim | +3, +6 | Verminderter Dreiklang |
-| Aug | +4, +8 | Übermäßiger Dreiklang |
-| Sus2 | +2, +7 | Sus2-Akkord |
-| Sus4 | +5, +7 | Sus4-Akkord |
+- Wenn für den Track eine **Tonart (SCL)** gesetzt ist, werden die leiterfremden Töne auf der Klaviatur ausgegraut — man kann nur Töne innerhalb der Skala anklicken
+- Der Akkordname wird **automatisch analysiert** und über dem Step angezeigt (z. B. „Dm7", „Gsus2")
+- Mehrere Töne können gleichzeitig aktiv sein
 
 #### Gate — Haltedauer
-Wie lange die Note klingt, ausgedrückt als Notenwert:
+Wie lange die Note klingt. Einstellung per **Drehregler** (wie ROOT, VEL und PROB%) — Arc links = kurz, Arc rechts = lang.
 
-| Button | Ratio-Wert | Bedeutung |
-|--------|-----------|-----------|
-| stac | 0.05 | Staccato — sehr kurz angeschlagen |
-| 1/64 | 0.25 | Zweiundsechzigstel |
-| 1/32 | 0.50 | Zweiunddreißigstel |
-| 1/16 | 1.00 | Sechzehntel = 1 Step (Legato) |
-| 1/16. | 1.50 | Punktierte Sechzehntel |
-| 1/8 | 2.00 | Achtelnote |
-| 1/8. | 3.00 | Punktierte Achtel |
-| 1/4 | 4.00 | Viertelnote |
-| 1/4. | 6.00 | Punktierte Viertel |
-| 1/2 | 8.00 | Halbe Note |
-| 1/2. | 12.00 | Punktierte Halbe |
-| 1/1 | 16.00 | Ganze Note — hält 16 Steps lang |
+Der Regler rastet auf 12 musikalisch sinnvolle Werte ein:
+
+| Rasterposition | Name | Bedeutung |
+|---------------|------|-----------|
+| 1 | stac | Staccato — sehr kurz |
+| 2 | 1/64 | Zweiundsechzigstel |
+| 3 | 1/32 | Zweiunddreißigstel |
+| 4 | 1/16 | Sechzehntel = 1 Step (Legato) |
+| 5 | 1/16. | Punktierte Sechzehntel |
+| 6 | 1/8 | Achtelnote |
+| 7 | 1/8. | Punktierte Achtel |
+| 8 | 1/4 | Viertelnote |
+| 9 | 1/4. | Punktierte Viertel |
+| 10 | 1/2 | Halbe Note |
+| 11 | 1/2. | Punktierte Halbe |
+| 12 | 1/1 | Ganze Note — hält 16 Steps lang |
+
+Drag-Empfindlichkeit: ~13 px pro Rasterposition, voller Bereich ca. 143 px. Gilt sowohl im Step-Detail-Editor als auch im Bulk-Edit (Multi-Step-Auswahl).
 
 > Gate > 1/16 bedeutet: die Note hält über den aktuellen Step hinaus. Der Sequencer springt weiter, die Note klingt noch.
 
@@ -316,7 +311,24 @@ Vollständig im Undo-Stack registriert (ab v1.0):
 
 ---
 
-## 6. Presets / Dateiverwaltung
+## 6. Sprache / Language
+
+Die Benutzeroberfläche ist auf **Englisch** und **Deutsch** verfügbar.
+
+- **Umschalten**: Menü **View → Language: Deutsch** (oder **Language: English**) — Kürzel **⌘⌥L**
+- Der Menüeintrag zeigt immer die jeweils **andere** Sprache (also: wenn Englisch aktiv ist, steht da „Deutsch")
+- **Kein Neustart nötig** — alle Views aktualisieren sich sofort
+- Die Einstellung wird gespeichert und bleibt über App-Neustarts erhalten
+
+**Nicht übersetzt** (international einheitlich):
+- Musikbegriffe: BPM, SWING, GATE, VEL, RATCHET
+- Skalennamen: Major, Minor, Dorian, Phrygian …
+- Notennamen: C, C#, D, … B
+- Ratio-Bezeichnungen: 1/16, 1/8., 3:2 …
+
+---
+
+## 7. Presets / File Management
 
 Presets werden als **JSON-Dateien** gespeichert. Empfohlener Ordner: `Patches/` im Projektverzeichnis.
 
@@ -336,7 +348,7 @@ Ein Preset enthält: BPM, Swing, alle 4 Patterns mit allen Tracks, Steps, CC-Wer
 
 ---
 
-## 7. Tastaturkürzel
+## 8. Tastaturkürzel
 
 | Kürzel | Funktion |
 |--------|----------|
@@ -351,10 +363,11 @@ Ein Preset enthält: BPM, Swing, alle 4 Patterns mit allen Tracks, Steps, CC-Wer
 | **⌥+Klick** | Step-Detail-Editor öffnen |
 | **⇧+Klick** | Step zur Auswahl hinzufügen |
 | **⌘⌥T** | Tooltips ein-/ausblenden |
+| **⌘⌥L** | Sprache wechseln (Englisch ↔ Deutsch) |
 
 ---
 
-## 8. MIDI-Einrichtung
+## 9. MIDI-Einrichtung
 
 1. **Einstellungen** (Zahnrad-Icon oben rechts) → MIDI-Ausgabegerät wählen
 2. Pro Track den gewünschten **MIDI-Kanal** im Dropdown setzen
@@ -366,7 +379,7 @@ Ein Preset enthält: BPM, Swing, alle 4 Patterns mit allen Tracks, Steps, CC-Wer
 
 ---
 
-## 9. Tipps & Workflows
+## 10. Tipps & Workflows
 
 **Einfacher polyrhythmischer Groove:**
 - Track 1: 16 Steps, 1:1 — Kick/Snare Grundgerüst
@@ -397,7 +410,7 @@ Ein Preset enthält: BPM, Swing, alle 4 Patterns mit allen Tracks, Steps, CC-Wer
 
 ---
 
-## 10. Glossar
+## 11. Glossar
 
 **BPM** (Beats Per Minute)
 Tempo-Angabe: Anzahl der Viertelnoten pro Minute. 120 BPM = 2 Beats pro Sekunde.

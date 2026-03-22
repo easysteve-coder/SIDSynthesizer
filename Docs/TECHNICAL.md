@@ -25,10 +25,11 @@ VintageSequencerApp.swift       App-Einstieg, AppDelegate, EnvironmentObject
 │   ├── CCRowView.swift         CC-Automation-Reihen
 │   ├── StepButtonView.swift    Einzelner Step-Button
 │   ├── StepDetailView.swift    ⌥+Klick-Editor + MultiStepEditView
-│   ├── KnobView.swift          Drehregler-Component
+│   ├── KnobView.swift          Drehregler-Component (inkl. GateKnobView)
 │   └── SettingsView.swift      MIDI-Port-Auswahl
-└── Theme/
-    └── VintageTheme.swift      Farben, Fonts, Layout-Konstanten
+├── Theme/
+│   └── VintageTheme.swift      Farben, Fonts, Layout-Konstanten
+└── Str.swift                   Alle lokalisierten UI-Strings (EN/DE)
 ```
 
 **State-Flow**: `SequencerEngine` (ObservableObject) hält alle Patterns als `@Published`. Views abonnieren via `@EnvironmentObject`. `Track` ist `ObservableObject`, wird per `@ObservedObject` in Listen verwendet.
@@ -293,6 +294,56 @@ let stepIndex = Int(contentX / (stretchedStepWidth + stepSpacing))
 
 Guard: `value.startLocation.y < stepRowHeight` — verhindert Aktivierung in der CC-Zone.
 
+### GateKnobView
+
+Spezieller Drehregler für Gate-Werte in `KnobView.swift`. Verhält sich visuell identisch mit ROOT, VEL und PROB% (gleicher Knopfkörper, gleiche Arc-Darstellung), rastet aber auf 12 feste musikalische Werte ein statt einen kontinuierlichen Bereich zu haben:
+
+```swift
+private let gateSnaps: [(label: String, value: Double)] = [
+    ("stac", 0.05), ("1/64", 0.25), ("1/32", 0.50),
+    ("1/16", 1.00), ("1/16.", 1.50), ("1/8", 2.00),
+    ("1/8.", 3.00), ("1/4", 4.00), ("1/4.", 6.00),
+    ("1/2", 8.00), ("1/2.", 12.00), ("1/1", 16.00)
+]
+```
+
+- **Arc-Mapping**: Index 0 (stac) = ganz links, Index 11 (1/1) = ganz rechts
+- **Drag-Empfindlichkeit**: ~13 px pro Rasterposition, voller Bereich ≈ 143 px (identisch mit anderen Knobs)
+- **Label**: zeigt den Namen des aktuellen Rasterwerts statt einer Zahl an
+- Wird sowohl in `StepDetailView` (Einzel-Edit) als auch in `MultiStepEditView` (Bulk-Edit) verwendet
+
+---
+
+### Lokalisierungs-Architektur (Str.swift)
+
+Alle UI-Strings sind in einer einzigen Datei `Str.swift` zentralisiert. Kein `.strings`-Bundle, keine Lokalisierungsdateien — alle Texte direkt im Code als statische Properties:
+
+```swift
+enum Str {
+    static var play:    String { lang == .de ? "Abspielen" : "Play" }
+    static var stop:    String { lang == .de ? "Stopp"     : "Stop" }
+    // ... ~80 Strings
+
+    private static var lang: Language {
+        Language(rawValue: UserDefaults.standard.string(forKey: "appLanguage") ?? "en") ?? .en
+    }
+}
+```
+
+**Sprache wechseln**: Menü **View → Language** (⌘⌥L). `UserDefaults.standard.set("de", forKey: "appLanguage")` → alle Views mit `@AppStorage("appLanguage")` re-rendern automatisch.
+
+**Nicht übersetzt** (international einheitlich): BPM, SWING, GATE, VEL, RATCHET, Skalennamen, Notennamen, Ratio-Bezeichnungen.
+
+**Abgedeckt**: Tooltips, Kontextmenüs, Alert-Texte (inkl. Quit-Dialog), Menüeinträge, Popover-Header, Undo-Aktionsnamen, Statusleiste, Dateidialoge, automatisch generierte Track-Namen.
+
+**Nicht-SwiftUI-Code** (NSAlert etc.) liest direkt aus `UserDefaults` zur Laufzeit — kein `@AppStorage` möglich, deshalb direkter Zugriff:
+```swift
+let lang = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
+alert.messageText = lang == "de" ? "Ungespeicherte Änderungen" : "Unsaved Changes"
+```
+
+---
+
 ### Tooltip-System
 
 ```swift
@@ -499,6 +550,11 @@ Wird in `CCRowView` und der Rubber-Band-Berechnung verwendet, damit CC-Knöpfe u
 
 ---
 
+### Str.swift
+Zentrale Lokalisierungsdatei. Enthält alle ~80 UI-Strings als statische Properties eines `enum Str`. Liest `UserDefaults["appLanguage"]` zur Laufzeit — kein Build-Schritt, kein `.strings`-Bundle nötig. Alle SwiftUI-Views mit `@AppStorage("appLanguage")` re-rendern automatisch bei Sprachwechsel.
+
+---
+
 ### UUID (Universally Unique Identifier)
 128-Bit-Zufalls-ID, in Swift via `UUID()` erzeugt. Alle Datenmodelle (`Step`, `Track`, `Pattern`) verwenden `UUID` als stabilen Identifier — wichtig für `ForEach`-Identifikation in SwiftUI und JSON-Serialisierung.
 
@@ -508,7 +564,7 @@ Wird in `CCRowView` und der Rubber-Band-Berechnung verwendet, damit CC-Knöpfe u
 
 | Version | Änderungen |
 |---------|-----------|
-| 1.0 | Undo-Stack vollständig: Ratio-Drag, Step-Count-Drag, Track-Name; TransportView Font-/Color-Fixes |
+| 1.0 | Undo-Stack vollständig (Ratio-Drag, Step-Count-Drag, Track-Name); GateKnobView (12 Rasterpunkte); Lokalisierung EN/DE (Str.swift, ⌘⌥L); Akkord-Eingabe via Klaviatur + Analyse; TransportView Font-/Color-Fixes |
 | 0.9 | Ratio-Modell (stepLengthNumerator/Denominator), globales BPM-Raster, File-Split, StretchHandle-Redesign, Tooltip-System, Rechtsklick-Kontextmenü, Direction-Symbole, globaler TextField-Fokus-Monitor, CC-Row-Scroll-Sync |
 | 0.17/0.18 | File-Split (TrackRowView → 5 Dateien), Drag-Fix (Basis einfrieren), CC-Skalierung |
 | 0.16 | MIDI-Ch. Picker, Ordnerstruktur, Docs, 5-against-4-Patch |
