@@ -324,6 +324,131 @@ Menüeintrag: **Ansicht → Tooltips anzeigen** (⌘⌥T)
 
 ---
 
+## Technisches Glossar
+
+Präzise Definitionen der Fachbegriffe, die in Codebase und Dokumentation verwendet werden.
+
+---
+
+### @AppStorage
+SwiftUI-Property-Wrapper, der einen Wert direkt in `UserDefaults` speichert und bei Änderung die View automatisch aktualisiert. Wird im Tooltip-System verwendet: `@AppStorage("showTooltips") var showTooltips: Bool = true`.
+
+---
+
+### @EnvironmentObject
+SwiftUI-Mechanismus, mit dem ein `ObservableObject` (z. B. `SequencerEngine`) im View-Baum nach unten weitergegeben wird, ohne es an jede View manuell zu übergeben. Views abonnieren Änderungen automatisch.
+
+---
+
+### @ObservedObject
+SwiftUI-Property-Wrapper für ein `ObservableObject`, das von außen übergeben wird (z. B. ein einzelner `Track` in `TrackRowView`). Die View rendert neu, wenn sich `@Published`-Properties des Objekts ändern.
+
+---
+
+### @Published
+Combine-Property-Wrapper: löst `objectWillChange` aus, wenn sich der Wert ändert. Alle UI-relevanten Properties in `Track` und `SequencerEngine` sind `@Published`.
+
+---
+
+### Bresenham-Prinzip
+Algorithmus aus der Computergrafik (Linienrasterung), hier übertragen auf die Timing-Engine: Der Restbetrag nach jedem Schritt wird akkumuliert statt verworfen (`pulseAccumulator -= pulsesPerStep`). Dadurch entsteht kein Drift bei nicht-ganzzahligen `pulsesPerStep`-Werten (z. B. 4.0 bei Triolen).
+
+---
+
+### Codable
+Swift-Protokoll (zusammengesetzt aus `Encodable` + `Decodable`). Ermöglicht automatische JSON-Serialisierung. `Step`, `Pattern` und `Track` konformieren zu `Codable` — deshalb können Presets als `.json`-Dateien gespeichert und geladen werden.
+
+---
+
+### CoreMIDI
+Apple-Framework für MIDI-I/O auf macOS. Liefert den externen MIDI-Clock (24 PPQ), empfängt und sendet MIDI-Nachrichten auf Hardware-Ebene. Im Sequencer via `MIDIManager.swift` gekapselt.
+
+---
+
+### cycleLengthSteps (deprecated)
+Altes Feld (vor v0.9): absolute Anzahl von 16tel-Pulsen pro Step-Zyklus. Wurde durch das Ratio-Modell (`stepLengthNumerator / stepLengthDenominator`) ersetzt. Beim Laden alter Presets wird der Wert via GCD automatisch migriert.
+
+---
+
+### didSet
+Swift-Property-Observer: Code-Block, der nach jeder Wertänderung ausgeführt wird. Im Sequencer z. B. bei `stepCount.didSet` (Array erweitern) und `bpm.didSet` (hasUnsavedChanges setzen).
+
+---
+
+### EnvironmentObject → *siehe @EnvironmentObject*
+
+---
+
+### GCD (Greatest Common Divisor)
+Größter gemeinsamer Teiler — mathematische Funktion, die beim Migrations-Algorithmus den alten `cycleLengthSteps`-Wert in einen reduzierten Bruch (num/den) umrechnet. Implementiert rekursiv: `func gcd(_ a: Int, _ b: Int) -> Int { b == 0 ? a : gcd(b, a % b) }`.
+
+---
+
+### NSAlert
+AppKit-Klasse für modale Dialoge (Fehlermeldungen, Bestätigungen). Wird im Sequencer für „Ungespeicherte Änderungen"-Warnungen beim Beenden und vor dem Laden eines neuen Presets verwendet.
+
+---
+
+### NSEvent-Monitor
+AppKit-API (`NSEvent.addLocalMonitorForEvents(matching:)`), die alle System-Events des Fensters abfängt. Im AppDelegate registriert, um TextField-Fokus zu entfernen (`makeFirstResponder(nil)`), wenn der Nutzer irgendwo außerhalb eines Textfelds klickt.
+
+---
+
+### NSUndoManager
+AppKit-Klasse für den Undo/Redo-Stack. Verwaltet eine Liste von Rückgängig-Aktionen. Im Sequencer für bestimmte destruktive Operationen (RND, CLR) registriert. Step-Toggles und Drag-Änderungen sind in v0.9 **noch nicht** im Undo-Stack.
+
+---
+
+### ObservableObject
+Combine-Protokoll: Objekte, die `objectWillChange` publizieren. `SequencerEngine` und `Track` sind `ObservableObject`. SwiftUI-Views reagieren automatisch auf Änderungen.
+
+---
+
+### PPQ (Pulses Per Quarter Note)
+Auflösung einer MIDI-Clock. Standard: **24 PPQ** (24 Pulse pro Viertelnote). Der Sequencer empfängt diese Pulse über CoreMIDI und zählt pro Track in `pulseAccumulator` hoch.
+
+---
+
+### PreferenceKey
+SwiftUI-Mechanismus, mit dem Child-Views Werte nach oben an Parent-Views kommunizieren (entgegen dem normalen Datenfluss). Im Sequencer für den Scroll-Offset der Lane-ScrollView verwendet, damit die Rubber-Band-Selektion im äußeren GeometryReader korrekte Step-Indizes berechnen kann.
+
+---
+
+### pulsesPerStep
+Berechnete Property in `Track`: gibt an, wie viele MIDI-Pulse ein Step dauert.
+```swift
+var pulsesPerStep: Double {
+    6.0 * Double(stepLengthNumerator) / Double(stepLengthDenominator)
+}
+```
+Bei 1:1-Ratio = 6.0 (sechs 24-PPQ-Pulse = eine 16tel-Note). Bei Triolen (2:3) = 4.0 (schneller). Bei Achteln (2:1) = 12.0 (langsamer).
+
+---
+
+### pulseAccumulator
+Laufzeit-Variable in `Track` (nicht serialisiert). Wird bei jedem MIDI-Puls um 1.0 erhöht. Sobald `pulseAccumulator >= pulsesPerStep`, wird der nächste Step gefeuert und der Restbetrag weitergetragen (Bresenham-Prinzip).
+
+---
+
+### Ratio-Modell
+Seit v0.9: Beschreibt die Step-Länge als reduzierter Bruch `stepLengthNumerator : stepLengthDenominator` (relativ zur normalen 16tel-Note). Erlaubt Polyrhythmus, Triolen, punktierte Noten etc. unabhängig von der absoluten Step-Anzahl.
+
+---
+
+### stretchedStepWidth
+Berechnete Breite eines Step-Buttons unter Berücksichtigung des Ratios:
+```
+stretchedStepWidth = (baseStepWidth + stepSpacing) * (num / den) - stepSpacing
+```
+Wird in `CCRowView` und der Rubber-Band-Berechnung verwendet, damit CC-Knöpfe und Selektion mit der visuellen Step-Breite übereinstimmen.
+
+---
+
+### UUID (Universally Unique Identifier)
+128-Bit-Zufalls-ID, in Swift via `UUID()` erzeugt. Alle Datenmodelle (`Step`, `Track`, `Pattern`) verwenden `UUID` als stabilen Identifier — wichtig für `ForEach`-Identifikation in SwiftUI und JSON-Serialisierung.
+
+---
+
 ## Versionshistorie
 
 | Version | Änderungen |
