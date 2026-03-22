@@ -76,6 +76,28 @@ struct TrackRowView: View {
                                 onDelete: onDelete,
                                 onDuplicate: onDuplicate)
                     .frame(height: stepRowHeight)
+                    .contextMenu {
+                        Button {
+                            engine.insertTrack(after: trackIndex)
+                        } label: {
+                            Label("Track darunter einfügen", systemImage: "plus")
+                        }
+
+                        Button {
+                            engine.duplicateTrack(at: trackIndex)
+                        } label: {
+                            Label("Track duplizieren", systemImage: "plus.square.on.square")
+                        }
+
+                        Divider()
+
+                        Button(role: .destructive) {
+                            engine.removeTrack(at: trackIndex)
+                        } label: {
+                            Label("Track löschen", systemImage: "trash")
+                        }
+                        .disabled(engine.currentPattern.tracks.count <= 1)
+                    }
 
                 if track.isExpanded {
                     Rectangle()
@@ -169,6 +191,8 @@ struct TrackRowView: View {
                             // ── SINGLE shared ScrollView ─────────────────
                             // Steps and CC rows in one VStack → they scroll
                             // in perfect sync, no linking needed.
+                            // Tapping anywhere in the scroll area dismisses
+                            // any focused track-name text field.
                             ScrollView(.horizontal, showsIndicators: false) {
                                 VStack(spacing: 0) {
 

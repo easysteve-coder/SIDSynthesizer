@@ -4,6 +4,25 @@ import AppKit
 // Handles "Unsaved changes?" when the window closes.
 final class AppDelegate: NSObject, NSApplicationDelegate {
     var engine: SequencerEngine?
+    private var mouseMonitor: Any?
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // Resign text-field focus whenever the user clicks anywhere outside a text field.
+        // The click event is NOT consumed — the target view still receives it normally.
+        mouseMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { event in
+            if let window = NSApp.keyWindow,
+               let hit = window.contentView?.hitTest(
+                   window.contentView!.convert(event.locationInWindow, from: nil)),
+               !(hit is NSTextField) {
+                window.makeFirstResponder(nil)
+            }
+            return event
+        }
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        if let m = mouseMonitor { NSEvent.removeMonitor(m); mouseMonitor = nil }
+    }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         guard let engine, engine.hasUnsavedChanges else { return .terminateNow }

@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 // MARK: - Track header (left panel)
 
@@ -41,7 +42,6 @@ struct TrackHeaderView: View {
 
             // ── Row 1: ● Name  ·  m · s · ⎘ ─────────────────────────────
             HStack(spacing: 4) {
-                // Spacer so content clears the traffic-light delete button
                 if onDelete != nil {
                     Spacer().frame(width: 14)
                 }
@@ -54,25 +54,29 @@ struct TrackHeaderView: View {
                     .textFieldStyle(.plain)
                     .frame(maxWidth: .infinity)
                     .focused($nameFocused)
-                    .onSubmit { nameFocused = false }
+                    .onSubmit   { nameFocused = false }
+                    .onExitCommand { nameFocused = false }
 
                 Button(track.isMuted ? "M" : "m") { track.isMuted.toggle() }
                     .buttonStyle(VintageSmallButtonStyle(isActive: track.isMuted, accent: .orange))
                     .help(tip(track.isMuted ? "Track stumm (klicken zum Einschalten)" : "Track stummschalten"))
+                    .contextMenu {}     // suppress parent context menu on buttons
 
                 Button(track.isSolo ? "S" : "s") { track.isSolo.toggle() }
                     .buttonStyle(VintageSmallButtonStyle(isActive: track.isSolo,
                         accent: Color(red: 0.9, green: 0.9, blue: 0.1)))
                     .help(tip(track.isSolo ? "Solo aktiv (alle anderen stumm)" : "Nur diesen Track Solo spielen"))
+                    .contextMenu {}
 
                 if let onDuplicate {
                     Button { onDuplicate() } label: {
                         Text("⎘")
-                            .font(.system(size: 13))
+                            .font(.system(size: 15))
                             .foregroundColor(VintageTheme.textSecondary)
                     }
                     .buttonStyle(.plain)
                     .help(tip("Track duplizieren"))
+                    .contextMenu {}
                 }
             }
 
@@ -90,6 +94,7 @@ struct TrackHeaderView: View {
                         }
                         .buttonStyle(.plain)
                         .help(tip(directionTooltip(dir)))
+                        .contextMenu {}
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 4))
@@ -114,6 +119,7 @@ struct TrackHeaderView: View {
                 .font(VintageTheme.monoSmall)
                 .frame(width: 58)
                 .help(tip("MIDI-Kanal · 10 ◆ = GM Drums"))
+                .contextMenu {}
             }
 
             // ── Row 3: FEEL · SCL  ·  RND · CLR ──────────────────────────
@@ -130,6 +136,7 @@ struct TrackHeaderView: View {
                     FeelPopover(track: track, accentColor: accentColor)
                 }
                 .help(tip("Timing-Versatz (Feel) einstellen"))
+                .contextMenu {}
 
                 let scaleActive = track.scaleIndex > 0
                 Button(scaleActive
@@ -142,6 +149,7 @@ struct TrackHeaderView: View {
                     ScalePickerPopover(track: track, accentColor: accentColor)
                 }
                 .help(tip("Tonart und Modus einstellen"))
+                .contextMenu {}
 
                 Spacer()
 
@@ -153,6 +161,7 @@ struct TrackHeaderView: View {
                 }
                 .buttonStyle(VintageSmallButtonStyle(isActive: false, accent: accentColor))
                 .help(tip("Steps zufällig belegen"))
+                .contextMenu {}
 
                 Button("CLR") {
                     let old = track.steps
@@ -162,28 +171,25 @@ struct TrackHeaderView: View {
                 }
                 .buttonStyle(VintageSmallButtonStyle(isActive: false, accent: .red))
                 .help(tip("Alle Steps dieses Tracks löschen"))
+                .contextMenu {}
             }
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 8)
         .frame(maxHeight: .infinity)
-        // ── Traffic-light delete button ───────────────────────────────────
+        // Traffic-light delete button — overlay top-left
         .overlay(alignment: .topLeading) {
             if let onDelete {
                 Button(action: onDelete) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.red)
-                        Image(systemName: "xmark")
-                            .font(.system(size: 6, weight: .bold))
-                            .foregroundColor(.white.opacity(0.85))
-                    }
-                    .frame(width: 13, height: 13)
+                    Text("×")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundColor(VintageTheme.textSecondary)
                 }
                 .buttonStyle(.plain)
                 .padding(.top, 9)
                 .padding(.leading, 8)
                 .help(tip("Track löschen"))
+                .contextMenu {}
             }
         }
     }

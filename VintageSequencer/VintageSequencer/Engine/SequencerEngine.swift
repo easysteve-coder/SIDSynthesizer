@@ -229,6 +229,18 @@ class SequencerEngine: ObservableObject {
         numTracks = currentPattern.tracks.count
     }
 
+    /// Inserts a new empty track directly after `index` in all patterns.
+    func insertTrack(after index: Int) {
+        for pattern in patterns {
+            let n = pattern.tracks.count + 1
+            let t = Track(name: "Track \(n)", midiChannel: min(n, 16))
+            let insertAt = min(index + 1, pattern.tracks.count)
+            pattern.tracks.insert(t, at: insertAt)
+        }
+        numTracks = currentPattern.tracks.count
+        hasUnsavedChanges = true
+    }
+
     func duplicateTrack(at index: Int) {
         for pattern in patterns {
             guard index < pattern.tracks.count,
