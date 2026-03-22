@@ -569,6 +569,7 @@ Zentrale Lokalisierungsdatei. Enthält alle ~80 UI-Strings als statische Propert
 
 | Version | Änderungen |
 |---------|-----------|
+| 1.0.4 | CC NEU-Button (Reset auf 64, Undo); CC Kurvenvisualisierung (Canvas, gefüllte Fläche + Linie + Punkte, allowsHitTesting(false), Echtzeit-Update) |
 | 1.0.3 | Pitch-Drag auf Steps (vertikal ~4 px/Halbton, Richtungserkennung beim ersten Impuls, Akkord-aware, Undo); CC RND-Button pro Lane (Undo); CC Draw-Modus ✏ (Interpolation, ein Undo-Eintrag pro Drag) |
 | 1.0.2 | Recent Files (UserDefaults, max. 10, Auto-Filter gelöschter Dateien); Bulk-Transpose TRNS-Knob (±24 Halbtöne, Snapshot-relativ, RESET, MIDI-Clamp 0–127) |
 | 1.0.1 | Bugfixes: Absturz bei Rechtsklick + Edit (Thread-Safety); MIDI-Feedback-Loop (eigener Port ausgeblendet); Gate-Untergrenze für Akkorde (min. 1/32); Undo für Track-Operationen (Add/Delete/Insert/Duplicate); Undo für Step-Drag |

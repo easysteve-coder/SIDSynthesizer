@@ -254,12 +254,24 @@ Jeder Track hat zwei CC-Reihen (CC1 und CC2) die ausgeklappt werden können:
 - Randomisiert alle Step-Werte der Lane zufällig (0–127)
 - Mit **Undo** (⌘Z)
 
+**CC NEU:**
+- **NEU-Button** neben RND und ✏
+- Setzt alle Step-Werte der Lane auf **64** (neutrale MIDI-Mitte)
+- Mit **Undo** (⌘Z)
+
 **CC Draw-Modus (✏):**
 - **✏-Button** neben dem CC-Label aktiviert den Zeichenmodus für diese Lane
 - Aktiv: subtile Tönung + gestrichelter Rahmen als visuelles Feedback
 - **Klick & Drag** zeichnet eine Kurve: Y-Position oben = 127, unten = 0
 - Bei schnellem Drag wird zwischen Steps **interpoliert** — keine Lücken
 - Einen einzelnen **Undo-Eintrag** pro Zeichenvorgang (nicht pro Step)
+
+**CC Kurvenvisualisierung:**
+- Immer sichtbar — kein Modus nötig
+- **Gefüllte Fläche** unter der Kurve in der Track-Akzentfarbe (halbtransparent)
+- **Linie** verbindet alle Punkte, **kleiner Punkt** pro Step
+- Aktualisiert sich sofort beim Zeichnen, beim Drehen einzelner Knobs und nach RND/NEU
+- Die Knobs bleiben vollständig bedienbar (Visualisierung liegt darüber, reagiert aber nicht auf Mausklicks)
 
 ---
 
