@@ -149,8 +149,17 @@ Jeder Kreis / jedes Rechteck = ein Step.
 | **Klick** | Step an/aus |
 | **⌥+Klick** | Step-Detail-Editor öffnen |
 | **⇧+Klick** | Step zur Auswahl hinzufügen / entfernen |
+| **Drag vertikal** | Pitch ändern (~4 px pro Halbton) |
+| **Drag horizontal** | Step verschieben (wie bisher) |
 | **Drag** (im leeren Bereich) | Rubber-Band-Auswahl aufziehen |
 | **Escape** | Auswahl aufheben |
+
+**Pitch-Drag:**
+- Die Richtung (Pitch oder Verschieben) wird beim **ersten Bewegungsimpuls** erkannt — danach bleibt sie für den gesamten Drag fixiert
+- Nach oben = höher, nach unten = tiefer, ca. **4 px pro Halbton**
+- Bei Akkord-Steps werden **alle Töne des Akkords** gemeinsam transponiert
+- Inaktive Steps werden beim Pitch-Drag automatisch **aktiviert**
+- Vollständig im **Undo-Stack** (⌘Z)
 
 **Indikatoren auf dem Step-Button:**
 - **Farbiger Punkt oben**: Note ist gesetzt (Farbe = Track-Akzentfarbe)
@@ -239,6 +248,18 @@ Jeder Track hat zwei CC-Reihen (CC1 und CC2) die ausgeklappt werden können:
 - Jeder Step hat einen eigenen Drehknopf für den CC-Wert (0–127)
 - CC-Rows scrollen synchron mit den Step-Buttons
 - Welcher MIDI-Controller-Parameter gesteuert wird, hängt vom Empfangsgerät ab (CC1 = oft Modulation, CC11 = Expression, etc.)
+
+**CC RND:**
+- Jede CC-Lane hat einen **RND-Button** im linken Label-Bereich
+- Randomisiert alle Step-Werte der Lane zufällig (0–127)
+- Mit **Undo** (⌘Z)
+
+**CC Draw-Modus (✏):**
+- **✏-Button** neben dem CC-Label aktiviert den Zeichenmodus für diese Lane
+- Aktiv: subtile Tönung + gestrichelter Rahmen als visuelles Feedback
+- **Klick & Drag** zeichnet eine Kurve: Y-Position oben = 127, unten = 0
+- Bei schnellem Drag wird zwischen Steps **interpoliert** — keine Lücken
+- Einen einzelnen **Undo-Eintrag** pro Zeichenvorgang (nicht pro Step)
 
 ---
 

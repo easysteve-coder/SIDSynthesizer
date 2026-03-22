@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum VintageTheme {
-    static let appVersion = "1.0.2"   // ← increment with each build session
+    static let appVersion = "1.0.3"   // ← increment with each build session
     // Background / panels
     static let background     = Color(red: 0.08, green: 0.08, blue: 0.09)
     static let panel          = Color(red: 0.13, green: 0.13, blue: 0.145)
