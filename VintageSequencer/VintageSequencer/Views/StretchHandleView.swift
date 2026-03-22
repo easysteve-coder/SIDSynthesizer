@@ -15,12 +15,16 @@ struct StretchHandleView: View {
     var baseStepWidth: CGFloat
     @EnvironmentObject private var engine: SequencerEngine
 
+    @Environment(\.undoManager) private var undoManager
+
     @State private var dragStartY:    CGFloat? = nil
     @State private var dragBaseIndex: Int?     = nil
     @State private var isRatioDragging         = false
     @State private var stepStartY:    CGFloat? = nil
     @State private var stepBase:      Int?     = nil
     @State private var showRatioPopover        = false
+    @State private var ratioUndoSnapshot: (num: Int, den: Int)? = nil
+    @State private var stepCountUndoSnapshot: Int? = nil
 
     private let stepSensitivity: CGFloat = 18
 
@@ -79,6 +83,7 @@ struct StretchHandleView: View {
                         if dragStartY == nil {
                             dragStartY    = value.translation.height
                             dragBaseIndex = currentRatioIndex
+                            ratioUndoSnapshot = (track.stepLengthNumerator, track.stepLengthDenominator)
                         }
                         let moved = value.translation.height - dragStartY!
                         let delta = -Int((moved / 24.0).rounded())
@@ -89,9 +94,18 @@ struct StretchHandleView: View {
                         engine.hasUnsavedChanges = true
                     }
                     .onEnded { _ in
-                        isRatioDragging = false
-                        dragStartY      = nil
-                        dragBaseIndex   = nil
+                        if let snap = ratioUndoSnapshot {
+                            let oldNum = snap.num, oldDen = snap.den
+                            undoManager?.registerUndo(withTarget: track) { t in
+                                t.stepLengthNumerator   = oldNum
+                                t.stepLengthDenominator = oldDen
+                            }
+                            undoManager?.setActionName("Step Ratio")
+                        }
+                        isRatioDragging    = false
+                        dragStartY         = nil
+                        dragBaseIndex      = nil
+                        ratioUndoSnapshot  = nil
                     }
             )
             .help(isStretched
@@ -115,8 +129,9 @@ struct StretchHandleView: View {
                     DragGesture(minimumDistance: 2)
                         .onChanged { value in
                             if stepStartY == nil {
-                                stepStartY = value.translation.height
-                                stepBase   = track.stepCount
+                                stepStartY            = value.translation.height
+                                stepBase              = track.stepCount
+                                stepCountUndoSnapshot = track.stepCount
                             }
                             let moved = value.translation.height - stepStartY!
                             let delta = -Int((moved / stepSensitivity).rounded())
@@ -124,8 +139,13 @@ struct StretchHandleView: View {
                             engine.hasUnsavedChanges = true
                         }
                         .onEnded { _ in
-                            stepStartY = nil
-                            stepBase   = nil
+                            if let old = stepCountUndoSnapshot {
+                                undoManager?.registerUndo(withTarget: track) { $0.stepCount = old }
+                                undoManager?.setActionName("Step Count")
+                            }
+                            stepStartY            = nil
+                            stepBase              = nil
+                            stepCountUndoSnapshot = nil
                         }
                 )
                 .help("↑↓ ziehen für Step-Anzahl")

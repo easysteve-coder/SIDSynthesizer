@@ -39,10 +39,10 @@ struct TransportView: View {
                             .frame(width: 5, height: 5)
                     }
                     Text(engine.currentPresetURL?.lastPathComponent ?? "—")
-                        .font(VintageTheme.monoSmall)
+                        .font(VintageTheme.monoMedium)
                         .foregroundColor(engine.hasUnsavedChanges
                             ? Color.orange.opacity(0.9)
-                            : VintageTheme.textDim)
+                            : VintageTheme.textSecondary)
                         .lineLimit(1)
                         .truncationMode(.middle)
                         .frame(maxWidth: 160, alignment: .leading)

@@ -15,6 +15,7 @@ struct TrackHeaderView: View {
     @FocusState private var nameFocused: Bool
     @State private var showScalePicker = false
     @State private var showFeelPopover = false
+    @State private var nameSnapshot: String? = nil
 
     @AppStorage("showTooltips") private var showTooltips: Bool = true
     private func tip(_ text: String) -> String { showTooltips ? text : "" }
@@ -54,6 +55,16 @@ struct TrackHeaderView: View {
                     .textFieldStyle(.plain)
                     .frame(maxWidth: .infinity)
                     .focused($nameFocused)
+                    .onChange(of: nameFocused) { focused in
+                        if focused {
+                            nameSnapshot = track.name
+                        } else if let old = nameSnapshot, old != track.name {
+                            let captured = old
+                            undoManager?.registerUndo(withTarget: track) { $0.name = captured }
+                            undoManager?.setActionName("Rename Track")
+                            nameSnapshot = nil
+                        }
+                    }
                     .onSubmit   { nameFocused = false }
                     .onExitCommand { nameFocused = false }
 

@@ -1,5 +1,5 @@
 # Steph Sequencer — Bedienungsanleitung
-**Version 0.9 · Prog Rock Edition**
+**Version 1.0 · Prog Rock Edition**
 
 ---
 
@@ -303,14 +303,16 @@ Der Steph Sequencer verwendet den macOS-Standard **Undo-Stack** (NSUndoManager).
 **Undo: ⌘Z** — letzten Schritt rückgängig machen
 **Redo: ⌘⇧Z** — rückgängig gemachten Schritt wiederholen
 
-Derzeit im Undo-Stack registriert:
+Vollständig im Undo-Stack registriert (ab v1.0):
 | Aktion | Undo |
 |--------|------|
 | **RND** (Steps randomisieren) | ✅ |
 | **CLR** (Track leeren) | ✅ |
-| Einzelne Step-Änderungen | ⚠️ geplant für v1.0 |
-| Step-Anzahl per Drag | ⚠️ geplant |
-| Track-Name | ⚠️ geplant |
+| Einzelne Step-Änderungen (Note, Gate, Velocity) | ✅ |
+| Step-Toggle (Step ein/aus) | ✅ |
+| **Step-Anzahl** per Drag | ✅ |
+| **Step-Längen-Ratio** per Drag | ✅ |
+| **Track-Name** umbenennen | ✅ |
 
 ---
 

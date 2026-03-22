@@ -1,5 +1,5 @@
 # Steph Sequencer — Technische Dokumentation
-**Version 0.9 · Stand: 2026-03**
+**Version 1.0 · Stand: 2026-03**
 
 ---
 
@@ -324,6 +324,61 @@ Menüeintrag: **Ansicht → Tooltips anzeigen** (⌘⌥T)
 
 ---
 
+## Undo-Stack (vollständig ab v1.0)
+
+Der Sequencer verwendet `NSUndoManager`. Alle destruktiven und editierenden Aktionen sind registriert.
+
+### Registrierte Aktionen
+
+| View | Aktion | Undo-Label | Strategie |
+|------|--------|-----------|-----------|
+| `TrackHeaderView` | RND | „Randomize" | Snapshot aller `steps` vor RND, Restore auf Undo |
+| `TrackHeaderView` | CLR | „Clear Track" | Snapshot aller `steps` vor CLR, Restore auf Undo |
+| `StepButtonView` | Step-Toggle | „Toggle Step" | `isActive`-Snapshot vor Toggle |
+| `StepDetailView` | Note/Gate/Velocity | „Edit Step" | Snapshot des `Step`-Structs vor Änderung |
+| `StretchHandleView` | Ratio-Drag | „Step Ratio" | `(num, den)`-Snapshot bei `dragStartY == nil` → Undo bei `.onEnded` |
+| `StretchHandleView` | Step-Count-Drag | „Step Count" | `stepCount`-Snapshot bei `stepStartY == nil` → Undo bei `.onEnded` |
+| `TrackHeaderView` | Track-Name | „Rename Track" | Name-Snapshot bei `nameFocused == true` → Undo bei `nameFocused == false` wenn Name geändert |
+
+### Muster: Drag-Undo (Ratio & Step Count)
+
+```swift
+// onChanged — erster Event:
+if dragStartY == nil {
+    dragStartY    = value.translation.height
+    dragBaseIndex = currentRatioIndex
+    // Snapshot für Undo:
+    let oldNum = track.stepLengthNumerator
+    let oldDen = track.stepLengthDenominator
+    engine.undoManager?.registerUndo(withTarget: track) { t in
+        t.stepLengthNumerator   = oldNum
+        t.stepLengthDenominator = oldDen
+    }
+    engine.undoManager?.setActionName("Step Ratio")
+}
+
+// onEnded — kein weiterer Undo nötig, der eine Eintrag oben deckt die ganze Drag-Session ab
+```
+
+### Muster: Track-Name-Undo
+
+```swift
+// onChange(of: nameFocused):
+if nameFocused {
+    nameSnapshot = track.name   // Fokus erhalten → snapshot
+} else {
+    if track.name != nameSnapshot {
+        let old = nameSnapshot!
+        engine.undoManager?.registerUndo(withTarget: track) { t in
+            t.name = old
+        }
+        engine.undoManager?.setActionName("Rename Track")
+    }
+}
+```
+
+---
+
 ## Technisches Glossar
 
 Präzise Definitionen der Fachbegriffe, die in Codebase und Dokumentation verwendet werden.
@@ -453,6 +508,7 @@ Wird in `CCRowView` und der Rubber-Band-Berechnung verwendet, damit CC-Knöpfe u
 
 | Version | Änderungen |
 |---------|-----------|
+| 1.0 | Undo-Stack vollständig: Ratio-Drag, Step-Count-Drag, Track-Name; TransportView Font-/Color-Fixes |
 | 0.9 | Ratio-Modell (stepLengthNumerator/Denominator), globales BPM-Raster, File-Split, StretchHandle-Redesign, Tooltip-System, Rechtsklick-Kontextmenü, Direction-Symbole, globaler TextField-Fokus-Monitor, CC-Row-Scroll-Sync |
 | 0.17/0.18 | File-Split (TrackRowView → 5 Dateien), Drag-Fix (Basis einfrieren), CC-Skalierung |
 | 0.16 | MIDI-Ch. Picker, Ordnerstruktur, Docs, 5-against-4-Patch |
