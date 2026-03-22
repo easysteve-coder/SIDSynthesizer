@@ -267,11 +267,12 @@ Jeder Track hat zwei CC-Reihen (CC1 und CC2) die ausgeklappt werden können:
 - Einen einzelnen **Undo-Eintrag** pro Zeichenvorgang (nicht pro Step)
 
 **CC Kurvenvisualisierung:**
-- Immer sichtbar — kein Modus nötig
+- Ein-/ausblendbar per **Chart-Button** (neben NEU) — gilt für alle CC-Lanes gleichzeitig
+- Einstellung wird persistent gespeichert (bleibt über App-Neustarts erhalten)
 - **Gefüllte Fläche** unter der Kurve in der Track-Akzentfarbe (halbtransparent)
 - **Linie** verbindet alle Punkte, **kleiner Punkt** pro Step
 - Aktualisiert sich sofort beim Zeichnen, beim Drehen einzelner Knobs und nach RND/NEU
-- Die Knobs bleiben vollständig bedienbar (Visualisierung liegt darüber, reagiert aber nicht auf Mausklicks)
+- Die Knobs bleiben vollständig bedienbar (Visualisierung reagiert nicht auf Mausklicks)
 
 ---
 
@@ -393,6 +394,7 @@ Ein Preset enthält: BPM, Swing, alle 4 Patterns mit allen Tracks, Steps, CC-Wer
 - Dateinamen werden ohne `.json`-Endung angezeigt
 - **Liste leeren**: entfernt alle Einträge aus der Liste
 - Gelöschte oder verschobene Dateien werden beim Start automatisch herausgefiltert
+- Die App speichert **Security-Scoped Bookmarks** — dadurch bleibt der Dateizugriff auch nach einem Neustart erhalten, ohne dass erneut ein Öffnen-Dialog erscheint
 
 ### Namensanzeige
 - Unterhalb des Logos: aktueller Dateiname

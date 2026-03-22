@@ -569,6 +569,7 @@ Zentrale Lokalisierungsdatei. Enthält alle ~80 UI-Strings als statische Propert
 
 | Version | Änderungen |
 |---------|-----------|
+| 1.0.5 | Security-Scoped Bookmarks für Recent Files (com.apple.security.files.bookmarks.app-scope Entitlement, persistenter Dateizugriff nach Neustart); CC-Kurve ein-/ausblendbar (Chart-Button, @AppStorage, alle Lanes gleichzeitig) |
 | 1.0.4 | CC NEU-Button (Reset auf 64, Undo); CC Kurvenvisualisierung (Canvas, gefüllte Fläche + Linie + Punkte, allowsHitTesting(false), Echtzeit-Update) |
 | 1.0.3 | Pitch-Drag auf Steps (vertikal ~4 px/Halbton, Richtungserkennung beim ersten Impuls, Akkord-aware, Undo); CC RND-Button pro Lane (Undo); CC Draw-Modus ✏ (Interpolation, ein Undo-Eintrag pro Drag) |
 | 1.0.2 | Recent Files (UserDefaults, max. 10, Auto-Filter gelöschter Dateien); Bulk-Transpose TRNS-Knob (±24 Halbtöne, Snapshot-relativ, RESET, MIDI-Clamp 0–127) |
