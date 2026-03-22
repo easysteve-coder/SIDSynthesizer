@@ -375,7 +375,7 @@ Menüeintrag: **Ansicht → Tooltips anzeigen** (⌘⌥T)
 
 ---
 
-## Undo-Stack (vollständig ab v1.0)
+## Undo-Stack (vollständig ab v1.0.1)
 
 Der Sequencer verwendet `NSUndoManager`. Alle destruktiven und editierenden Aktionen sind registriert.
 
@@ -386,10 +386,15 @@ Der Sequencer verwendet `NSUndoManager`. Alle destruktiven und editierenden Akti
 | `TrackHeaderView` | RND | „Randomize" | Snapshot aller `steps` vor RND, Restore auf Undo |
 | `TrackHeaderView` | CLR | „Clear Track" | Snapshot aller `steps` vor CLR, Restore auf Undo |
 | `StepButtonView` | Step-Toggle | „Toggle Step" | `isActive`-Snapshot vor Toggle |
+| `StepButtonView` | Step-Drag | „Move Step" | Position-Snapshot vor Drag-Start → Restore auf Undo |
 | `StepDetailView` | Note/Gate/Velocity | „Edit Step" | Snapshot des `Step`-Structs vor Änderung |
 | `StretchHandleView` | Ratio-Drag | „Step Ratio" | `(num, den)`-Snapshot bei `dragStartY == nil` → Undo bei `.onEnded` |
 | `StretchHandleView` | Step-Count-Drag | „Step Count" | `stepCount`-Snapshot bei `stepStartY == nil` → Undo bei `.onEnded` |
 | `TrackHeaderView` | Track-Name | „Rename Track" | Name-Snapshot bei `nameFocused == true` → Undo bei `nameFocused == false` wenn Name geändert |
+| `SequencerEngine` | Track hinzufügen | „Add Track" | Snapshot Index → deleteTrack auf Undo |
+| `SequencerEngine` | Track löschen | „Delete Track" | Snapshot aller Track-Daten + Index → Re-Insert auf Undo |
+| `SequencerEngine` | Track einfügen | „Insert Track" | wie Add Track |
+| `SequencerEngine` | Track duplizieren | „Duplicate Track" | wie Add Track |
 
 ### Muster: Drag-Undo (Ratio & Step Count)
 
@@ -564,6 +569,7 @@ Zentrale Lokalisierungsdatei. Enthält alle ~80 UI-Strings als statische Propert
 
 | Version | Änderungen |
 |---------|-----------|
+| 1.0.1 | Bugfixes: Absturz bei Rechtsklick + Edit (Thread-Safety); MIDI-Feedback-Loop (eigener Port ausgeblendet); Gate-Untergrenze für Akkorde (min. 1/32); Undo für Track-Operationen (Add/Delete/Insert/Duplicate); Undo für Step-Drag |
 | 1.0 | Undo-Stack vollständig (Ratio-Drag, Step-Count-Drag, Track-Name); GateKnobView (12 Rasterpunkte); Lokalisierung EN/DE (Str.swift, ⌘⌥L); Akkord-Eingabe via Klaviatur + Analyse; TransportView Font-/Color-Fixes |
 | 0.9 | Ratio-Modell (stepLengthNumerator/Denominator), globales BPM-Raster, File-Split, StretchHandle-Redesign, Tooltip-System, Rechtsklick-Kontextmenü, Direction-Symbole, globaler TextField-Fokus-Monitor, CC-Row-Scroll-Sync |
 | 0.17/0.18 | File-Split (TrackRowView → 5 Dateien), Drag-Fix (Basis einfrieren), CC-Skalierung |
@@ -592,7 +598,7 @@ Zentrale Lokalisierungsdatei. Enthält alle ~80 UI-Strings als statische Propert
 ```bash
 cd "/Users/stephanschmitt/Library/Mobile Documents/com~apple~CloudDocs/Mainstage etc/Gamepad-MIDI/Vintage Sequencer App"
 git add .
-git commit -m "v0.9 – Beschreibung"
+git commit -m "v1.0.1 – Beschreibung"
 git push https://easysteve-coder:TOKEN@github.com/easysteve-coder/Steph-Sequenzer.git main
 ```
 

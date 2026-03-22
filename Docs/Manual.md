@@ -8,7 +8,7 @@
 Der Steph Sequencer ist ein polyrhythmischer MIDI-Step-Sequencer für macOS. Er sendet MIDI-Noten an beliebige Synthesizer, DAWs oder Hardware-Instrumente über CoreMIDI.
 
 **Was er kann:**
-- Bis zu 8 Tracks pro Pattern, jeder mit eigener Step-Anzahl (1–64)
+- Beliebig viele Tracks pro Pattern, jeder mit eigener Step-Anzahl (1–64)
 - 4 unabhängige Patterns (A–D), nahtlos umschaltbar
 - Polyrhythmik: jeder Track kann in einem anderen Zeitverhältnis laufen (z.B. 7:8, 5:4, Triole)
 - Pro Step: Note, Akkord, Gate, Velocity, Wahrscheinlichkeit, Ratchet
@@ -298,16 +298,21 @@ Der Steph Sequencer verwendet den macOS-Standard **Undo-Stack** (NSUndoManager).
 **Undo: ⌘Z** — letzten Schritt rückgängig machen
 **Redo: ⌘⇧Z** — rückgängig gemachten Schritt wiederholen
 
-Vollständig im Undo-Stack registriert (ab v1.0):
+Vollständig im Undo-Stack registriert (ab v1.0.1):
 | Aktion | Undo |
 |--------|------|
 | **RND** (Steps randomisieren) | ✅ |
 | **CLR** (Track leeren) | ✅ |
 | Einzelne Step-Änderungen (Note, Gate, Velocity) | ✅ |
 | Step-Toggle (Step ein/aus) | ✅ |
+| **Step verschieben** per Drag | ✅ |
 | **Step-Anzahl** per Drag | ✅ |
 | **Step-Längen-Ratio** per Drag | ✅ |
 | **Track-Name** umbenennen | ✅ |
+| Track **hinzufügen** | ✅ |
+| Track **löschen** (inkl. alle Step-Daten) | ✅ |
+| Track **einfügen** | ✅ |
+| Track **duplizieren** | ✅ |
 
 ---
 
@@ -369,7 +374,7 @@ Ein Preset enthält: BPM, Swing, alle 4 Patterns mit allen Tracks, Steps, CC-Wer
 
 ## 9. MIDI-Einrichtung
 
-1. **Einstellungen** (Zahnrad-Icon oben rechts) → MIDI-Ausgabegerät wählen
+1. **Einstellungen** (Regler-Icon oben rechts) → MIDI-Ausgabegerät wählen
 2. Pro Track den gewünschten **MIDI-Kanal** im Dropdown setzen
 3. Für externe Clock: **Clock → EXT** wählen, dann MIDI-Clock-Quelle in der DAW aktivieren (Logic: Einstellungen → MIDI → Sync; Ableton: Preferences → Link/Tempo/MIDI)
 
